@@ -4,6 +4,24 @@
 # Path to your oh-my-zsh installation.
 export ZSH="/home/cberg18/.oh-my-zsh"
 
+UPSTREAM=${1:-'@{u}'}
+LOCAL=$(git rev-parse @)
+REMOTE=$(git rev-parse "$UPSTREAM")
+
+git fetch
+
+if [ $LOCAL != $REMOTE ]
+then
+    #if changes exist, pull
+    read -p "An update is available, do you want to install it? " yn
+    case $yn in 
+    [Yy]* ) git pull;;
+    [Nn]* ) echo "Not installing update. "
+
+else [ $LOCAL = $REMOTE ]
+    echo "No updates available."
+fi
+
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
