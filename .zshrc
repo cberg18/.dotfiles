@@ -72,6 +72,11 @@ DISABLE_UNTRACKED_FILES_DIRTY="true"
 # Add wisely, as too many plugins slow down shell startup.
 plugins=( git git-prompt python pip zsh-autosuggestions zsh-syntax-highlighting)
 
+# Helpful github gist for installing zsh_autosuggestions and zsy-syntax-highlighting
+# https://gist.github.com/dogrocker/1efb8fd9427779c827058f873b94df95
+# git clone https://github.com/zsh-users/zsh-autosuggestions.git $ZSH_CUSTOM/plugins/zsh-autosuggestions
+# git clone https://github.com/zsh-users/zsh-autosuggestions.git $ZSH_CUSTOM/plugins/zsh-autosuggestions
+
 source $ZSH/oh-my-zsh.sh
 
 # User configuration
