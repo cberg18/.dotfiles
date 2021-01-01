@@ -108,18 +108,18 @@ fi
 # Import colorscheme from 'wal' asynchronously
 # &   # Run the process in the background.
 # ( ) # Hide shell job control messages.
-(cat ~/.cache/wal/sequences &)
+#(cat ~/.cache/wal/sequences &)
 
 # Alternative (blocks terminal for 0-3ms)
-cat ~/.cache/wal/sequences
+if [ -f "~/.cache/wal/sequences" ]; then
+  cat ~/.cache/wal/sequences
+fi
+#cat ~/.cache/wal/sequences
 
 # To add support for TTYs this line can be optionally added.
-source ~/.cache/wal/colors-tty.sh
-
-#alias ll='colorls -lA --sd --gs --group-directories-first'
-#alias ls='colorls --group-directories-first'
-
-source $(dirname $(gem which colorls))/tab_complete.sh
+if [ -f 'source ~/.cache/wal/colors-tty.sh' ]; then
+  source ~/.cache/wal/colors-tty.sh
+fi
 
 alias kraken="gitkraken"
 
