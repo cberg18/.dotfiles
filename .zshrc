@@ -5,15 +5,15 @@
 export ZSH="/home/cberg18/.oh-my-zsh"
 
 UPSTREAM=${1:-'@{u}'}
-LOCAL=$(git rev-parse @)
-REMOTE=$(git rev-parse "$UPSTREAM")
+LOCAL=$(git --git-dir=/home/cberg18/dotfiles/.git --work-tree=/home/cberg18/dotfiles rev-parse @)
+REMOTE=$(git --git-dir=/home/cberg18/dotfiles/.git --work-tree=/home/cberg18/dotfiles rev-parse "$UPSTREAM")
 
-git fetch
+git --git-dir=/home/cberg18/dotfiles/.git --work-tree=/home/cberg18/dotfiles fetch
 
 if [ $LOCAL != $REMOTE ]
 then
     echo "Update available, pulling..."
-    git pull
+    git --git-dir=/home/cberg18/dotfiles/.git --work-tree=/home/cberg18/dotfiles pull
 else [ $LOCAL = $REMOTE ]
 fi
 
