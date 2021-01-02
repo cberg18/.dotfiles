@@ -12,13 +12,9 @@ git fetch
 
 if [ $LOCAL != $REMOTE ]
 then
-    #if changes exist, pull
-    read -p "An update is available, do you want to install it? " yn
-    case $yn in 
-    [Yy]* ) git pull;;
-    [Nn]* ) echo "Not installing update. "
+    echo "Update available, pulling..."
+    git pull
 else [ $LOCAL = $REMOTE ]
-    echo "No updates available."
 fi
 
 # Set name of the theme to load --- if set to "random", it will
