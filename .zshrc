@@ -135,10 +135,11 @@ fi
 #cat ~/.cache/wal/sequences
 
 # To add support for TTYs this line can be optionally added.
-if [ -f 'source ~/.cache/wal/colors-tty.sh' ]; then
+if [ -f "source ~/.cache/wal/colors-tty.sh" ]; then
   source ~/.cache/wal/colors-tty.sh
 fi
 
+alias cp="cp -v"
 alias kraken="gitkraken"
 
 export PYTHONSTARTUP="~/.pythonrc"
