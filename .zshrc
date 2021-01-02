@@ -17,7 +17,6 @@ then
     case $yn in 
     [Yy]* ) git pull;;
     [Nn]* ) echo "Not installing update. "
-
 else [ $LOCAL = $REMOTE ]
     echo "No updates available."
 fi
