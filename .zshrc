@@ -139,4 +139,4 @@ alias cp="cp -v"
 alias ls="ls -la"
 alias kraken="gitkraken"
 
-export PYTHONSTARTUP="~/.pythonrc"
+export PYTHONSTARTUP=$HOME/.pythonrc
