@@ -3,3 +3,6 @@ env:
 background_opacity: 0.85
 cursor:
   style: Beam
+dimension:
+    columns:85
+    lines:30
