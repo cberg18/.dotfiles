@@ -4,11 +4,12 @@
 # Path to your oh-my-zsh installation.
 export ZSH="/home/cberg18/.oh-my-zsh"
 
+git --git-dir=/home/cberg18/dotfiles/.git --work-tree=/home/cberg18/dotfiles fetch
+
 UPSTREAM=${1:-'@{u}'}
 LOCAL=$(git --git-dir=/home/cberg18/dotfiles/.git --work-tree=/home/cberg18/dotfiles rev-parse @)
 REMOTE=$(git --git-dir=/home/cberg18/dotfiles/.git --work-tree=/home/cberg18/dotfiles rev-parse "$UPSTREAM")
 
-git --git-dir=/home/cberg18/dotfiles/.git --work-tree=/home/cberg18/dotfiles fetch
 
 if [ $LOCAL != $REMOTE ]
 then
