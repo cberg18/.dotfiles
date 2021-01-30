@@ -136,7 +136,7 @@ if [ -f "source ~/.cache/wal/colors-tty.sh" ]; then
 fi
 
 alias cp="cp -v"
-alias ls="ls -la"
+alias lls="ls -la"
 alias kraken="gitkraken"
 
 export PYTHONSTARTUP=$HOME/.pythonrc
