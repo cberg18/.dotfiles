@@ -8,7 +8,7 @@ else
     echo "=> Your zshrc has already been linked. "
 fi
 
-if [! -L ~/.gitconfig ]
+if [ ! -L ~/.gitconfig ]
 then
     echo "=> Linking your gitfconfig. "
     ln -sv ~/.dotfiles/.gitconfig ~/.gitconfig
