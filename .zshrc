@@ -4,17 +4,17 @@
 # Path to your oh-my-zsh installation.
 export ZSH="/home/cberg18/.oh-my-zsh"
 
-git --git-dir=/home/cberg18/dotfiles/.git --work-tree=/home/cberg18/dotfiles fetch
+git --git-dir=/home/cberg18/.dotfiles/.git --work-tree=/home/cberg18/.dotfiles fetch
 
 UPSTREAM=${1:-'@{u}'}
-LOCAL=$(git --git-dir=/home/cberg18/dotfiles/.git --work-tree=/home/cberg18/dotfiles rev-parse @)
-REMOTE=$(git --git-dir=/home/cberg18/dotfiles/.git --work-tree=/home/cberg18/dotfiles rev-parse "$UPSTREAM")
+LOCAL=$(git --git-dir=/home/cberg18/.dotfiles/.git --work-tree=/home/cberg18/.dotfiles rev-parse @)
+REMOTE=$(git --git-dir=/home/cberg18/.dotfiles/.git --work-tree=/home/cberg18/.dotfiles rev-parse "$UPSTREAM")
 
 
 if [ $LOCAL != $REMOTE ]
 then
     echo "Update available, pulling..."
-    git --git-dir=/home/cberg18/dotfiles/.git --work-tree=/home/cberg18/dotfiles pull
+    git --git-dir=/home/cberg18/.dotfiles/.git --work-tree=/home/cberg18/.dotfiles pull
 else [ $LOCAL = $REMOTE ]
 fi
 
@@ -46,9 +46,7 @@ ZSH_THEME="af-magic"
 # Uncomment the following line to change how often to auto-update (in days).
 # export UPDATE_ZSH_DAYS=13
 
-# Uncomment the following line if pasting UR
-
-#ls and other text is messed up.
+# Uncomment the following line if pasting URLs and other text is messed up.
 # DISABLE_MAGIC_FUNCTIONS="true"
 
 # Uncomment the following line to disable colors in ls.
