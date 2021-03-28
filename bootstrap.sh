@@ -1,7 +1,21 @@
-    #!/bin/bash
+#!/bin/bash
 
+#Required packages:
+#zsh
+#oh-my-zsh
+#
+
+#remove the default .zshrc
+if [ ~/.zshrc ]
+then
+    echo "=> Removing default .zshrc. "
+    rm ~/.zshrc
+fi
+
+#link your .zshrc
 if [ ! -L ~/.zshrc ]
 then
+    rm ~/.zshrc
     echo "=> Linking your zshrc. "
     ln -sv ~/.dotfiles/.zshrc ~/.zshrc
 else
