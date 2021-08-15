@@ -53,3 +53,9 @@ then
 else
     echo "=> Your alacritty config has already been linked. "
 fi
+
+echo "=> Installing ZSH Autosuggestions"
+git clone https://github.com/zsh-users/zsh-autosuggestions.git $ZSH_CUSTOM/plugins/zsh-autosuggestions
+
+echo "=> Installing ZSH Syntax Highlighting"
+git clone https://github.com/zsh-users/zsh-syntax-highlighting.git $ZSH_CUSTOM/plugins/zsh-syntax-highlighting
