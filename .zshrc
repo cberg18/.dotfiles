@@ -136,6 +136,8 @@ fi
 
 alias cp="cp -v"
 alias lls="ls -la"
-alias kraken="gitkraken"
 
 export PYTHONSTARTUP=$HOME/.pythonrc
+
+
+[ -f $(which cbonsai) ] && cbonsai -p
