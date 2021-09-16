@@ -139,5 +139,5 @@ alias lls="ls -la"
 
 export PYTHONSTARTUP=$HOME/.pythonrc
 
-
-[ -f $(which cbonsai) ] && cbonsai -p
+CBONSAI=$(which cbonsai)
+[ -f $CBONSAI ] && cbonsai -p
