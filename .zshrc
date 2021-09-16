@@ -2,19 +2,19 @@
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-export ZSH="/home/cberg18/.oh-my-zsh"
+export ZSH="$HOME/.oh-my-zsh"
 
-git --git-dir=/home/cberg18/.dotfiles/.git --work-tree=/home/cberg18/.dotfiles fetch
+git --git-dir=$HOME/.dotfiles/.git --work-tree=$HOME/.dotfiles fetch
 
 UPSTREAM=${1:-'@{u}'}
-LOCAL=$(git --git-dir=/home/cberg18/.dotfiles/.git --work-tree=/home/cberg18/.dotfiles rev-parse @)
-REMOTE=$(git --git-dir=/home/cberg18/.dotfiles/.git --work-tree=/home/cberg18/.dotfiles rev-parse "$UPSTREAM")
+LOCAL=$(git --git-dir=$HOME/.dotfiles/.git --work-tree=$HOME/.dotfiles rev-parse @)
+REMOTE=$(git --git-dir=$HOME/.dotfiles/.git --work-tree=$HOME/.dotfiles rev-parse "$UPSTREAM")
 
 
 if [ $LOCAL != $REMOTE ]
 then
     echo "Update available, pulling..."
-    git --git-dir=/home/cberg18/.dotfiles/.git --work-tree=/home/cberg18/.dotfiles pull
+    git --git-dir=$HOME/.dotfiles/.git --work-tree=$HOME/.dotfiles pull
 else [ $LOCAL = $REMOTE ]
 fi
 
