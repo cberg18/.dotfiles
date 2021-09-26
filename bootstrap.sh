@@ -80,6 +80,9 @@ git clone https://github.com/zsh-users/zsh-autosuggestions.git "$ZSH_CUSTOM"/plu
 echo "=> Installing ZSH Syntax Highlighting"
 git clone https://github.com/zsh-users/zsh-syntax-highlighting.git "$ZSH_CUSTOM"/plugins/zsh-syntax-highlighting
 
+echo "=> Installing additional nano syntax highlighting"
+curl https://raw.githubusercontent.com/scopatz/nanorc/master/install.sh | sh
+
 
 ################################################################################################################################################################################################################################################
 
