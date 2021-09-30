@@ -118,6 +118,7 @@ if [ ! -L ~/.nanorc ]
 then
     echo "=> Linking your nanorc. "
     ln -sv ~/.dotfiles/.nanorc ~/.nanorc
+    ln -sv ~/.dotfiles/.nano ~/.nano
 else
     echo "=> Your nanorc has already been linked. "
 fi
