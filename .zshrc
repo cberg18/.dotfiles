@@ -118,24 +118,10 @@ fi
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
-# Import colorscheme from 'wal' asynchronously
-# &   # Run the process in the background.
-# ( ) # Hide shell job control messages.
-#(cat ~/.cache/wal/sequences &)
-
-# Alternative (blocks terminal for 0-3ms)
-if [ -f "~/.cache/wal/sequences" ]; then
-  cat ~/.cache/wal/sequences
-fi
-#cat ~/.cache/wal/sequences
-
-# To add support for TTYs this line can be optionally added.
-if [ -f "source ~/.cache/wal/colors-tty.sh" ]; then
-  source ~/.cache/wal/colors-tty.sh
-fi
-
 alias cp="cp -v"
 alias lls="ls -la"
-alias kraken="gitkraken"
 
 export PYTHONSTARTUP=$HOME/.pythonrc
+
+CBONSAI=$(which cbonsai)
+[ -f $CBONSAI ] && cbonsai -p

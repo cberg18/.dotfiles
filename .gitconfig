@@ -5,4 +5,4 @@
 	smudge = git-lfs smudge -- %f
 [user]
 	email = cberg18@gmail.com
-	name = cberg18
+	name = Cory Berg

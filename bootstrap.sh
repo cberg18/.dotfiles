@@ -10,7 +10,7 @@ then
     rm ~/.smbcredentials
 fi
 
-echo -n Username: 
+echo Username: 
 read -s -r username
 echo ""
 echo -n Password: 
@@ -25,7 +25,8 @@ chmod 600 ~/.smbcredentials
 
 echo "Mount NAS share"
 sudo mkdir /home/cberg18/share
-echo "//192.168.1.15/share /home/cberg18/share cifs credentials=/home/cberg18/.smbcredentials,iocharset=utf8 0 0" >> /etc/fstab
+echo "//truenas/share /home/cberg18/share cifs credentials=/home/cberg18/.smbcredentials,iocharset=utf8 0 0" | sudo tee -a /etc/fstab > /dev/null
+sudo mount -av
 
 ################################################################################################################################################################################################################################################
 
@@ -48,10 +49,14 @@ echo "Add Syncthing PGP Key"
 sudo curl -s -o /usr/share/keyrings/syncthing-archive-keyring.gpg https://syncthing.net/release-key.gpg
 echo "deb [signed-by=/usr/share/keyrings/syncthing-archive-keyring.gpg] https://apt.syncthing.net/ syncthing stable" | sudo tee /etc/apt/sources.list.d/syncthing.list
 
+echo "Add piper repository"
+sudo add-apt-repository ppa:libratbag-piper/piper-libratbag-git
+
+
 echo "Add Steam repo to apt"
 sudo add-apt-repository multiverse
 
-PACKAGE_LIST=(python3 dirmngr gnupg apt-transport-https ca-certificates software-properties-common zsh sublime-text git curl wget apt-transport-https code gh steam syncthing)
+PACKAGE_LIST=(python3 python3-pip dirmngr gnupg apt-transport-https ca-certificates software-properties-common zsh sublime-text git curl wget apt-transport-https code gh steam syncthing gnome-tweaks piper vlc cifs-utils)
 
 sudo apt update
 
@@ -61,6 +66,7 @@ sudo apt install -y "${PACKAGE_LIST[@]}"
 echo "Install Google Chrome"
 wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
 sudo apt install ./google-chrome-stable_current_amd64.deb
+rm ./google-chrome-stable_current_amd64.deb
 
 echo "Install snap based programs"
 sudo snap install discord 
@@ -73,6 +79,9 @@ git clone https://github.com/zsh-users/zsh-autosuggestions.git "$ZSH_CUSTOM"/plu
 
 echo "=> Installing ZSH Syntax Highlighting"
 git clone https://github.com/zsh-users/zsh-syntax-highlighting.git "$ZSH_CUSTOM"/plugins/zsh-syntax-highlighting
+
+echo "=> Installing additional nano syntax highlighting"
+curl https://raw.githubusercontent.com/scopatz/nanorc/master/install.sh | sh
 
 
 ################################################################################################################################################################################################################################################
@@ -131,7 +140,7 @@ fi
 
 ################################################################################################################################################################################################################################################
 
-echo "Create SSH Keys"
+echo "Create SSH Key"
 ssh-keygen -t ed25519 -C "cberg18@gmail.com"
 eval "$(ssh-agent -s)"
 ssh-add ~/.ssh/id_ed25519
@@ -141,9 +150,10 @@ gh ssh-key add ~/.ssh/id_ed25519.pub --title "popdesktop"
 
 echo "Download my gh repositories"
 mkdir ~/Documents/git
-git clone git@github.com:cberg18/stockBot.git ~/Documents/git
-git clone git@github.com:cberg18/ergodox_f.git ~/Documents/git
-git clone git@github.com:cberg18/stockli.git ~/Documents/git
+cd ~/Documents/git
+git clone git@github.com:cberg18/stockBot.git 
+git clone git@github.com:cberg18/ergodox_f.git
+git clone git@github.com:cberg18/stockli.git 
 
 ssh-copy-id -i ~/.ssh/id_ed25519.pub pi@pihole
 ssh-copy-id -i ~/.ssh/id_ed25519.pub root@truenas
@@ -151,3 +161,5 @@ ssh-copy-id -i ~/.ssh/id_ed25519.pub rpi0
 ssh-copy-id -i ~/.ssh/id_ed25519.pub rpi1
 ssh-copy-id -i ~/.ssh/id_ed25519.pub rpi2
 ssh-copy-id -i ~/.ssh/id_ed25519.pub htpc
+
+chsh -s $(which zsh)
