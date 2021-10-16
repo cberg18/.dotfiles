@@ -127,6 +127,6 @@ CBONSAI=$(which cbonsai)
 [ -f $CBONSAI ] && cbonsai -p
 
 nano_syntax_highlighting () {
-git clone https://github.com/scopatz/nanorc.git ~/.dotfiles/.nano/nanorc
-ln -sv ~/.dotfiles/.nano ~/.nano
+git clone https://github.com/scopatz/nanorc.git $HOME/.dotfiles/.nano/nanorc
+ln -sv $HOME/.dotfiles/.nano $HOME/.nano
 }
