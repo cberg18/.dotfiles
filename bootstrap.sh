@@ -1,5 +1,6 @@
 #!/bin/bash
 
+#main bootstrap for new systems
 
 ################################################################################################################################################################################################################################################
 
@@ -131,36 +132,28 @@ else
     echo "=> Your pythonrc has been linked. "
 fi
 
-if [ ! -L ~/.config/alacritty/alacritty.yml ]
-then 
-    echo "=> Linking your alacritty config. "
-    ln -sv ~/.dotfiles/alacritty.yml ~/.config/alacritty/alacritty.yml 
-else
-    echo "=> Your alacritty config has already been linked. "
-fi
-
 ################################################################################################################################################################################################################################################
 
-echo "Create SSH Key"
-ssh-keygen -t ed25519 -C "cberg18@gmail.com"
-eval "$(ssh-agent -s)"
-ssh-add ~/.ssh/id_ed25519
+#echo "Create SSH Key"
+#ssh-keygen -t ed25519 -C "cberg18@gmail.com"
+#eval "$(ssh-agent -s)"
+#ssh-add ~/.ssh/id_ed25519
 
-gh auth login
-gh ssh-key add ~/.ssh/id_ed25519.pub --title "popdesktop"
+#gh auth login
+#gh ssh-key add ~/.ssh/id_ed25519.pub --title "popdesktop"
 
-echo "Download my gh repositories"
-mkdir ~/Documents/git
-cd ~/Documents/git
-git clone git@github.com:cberg18/stockBot.git 
-git clone git@github.com:cberg18/ergodox_f.git
-git clone git@github.com:cberg18/stockli.git 
+#echo "Download my gh repositories"
+#mkdir ~/Documents/git
+#cd ~/Documents/git
+#git clone git@github.com:cberg18/stockBot.git 
+#git clone git@github.com:cberg18/ergodox_f.git
+#git clone git@github.com:cberg18/stockli.git 
 
-ssh-copy-id -i ~/.ssh/id_ed25519.pub pi@pihole
-ssh-copy-id -i ~/.ssh/id_ed25519.pub root@truenas
-ssh-copy-id -i ~/.ssh/id_ed25519.pub rpi0
-ssh-copy-id -i ~/.ssh/id_ed25519.pub rpi1
-ssh-copy-id -i ~/.ssh/id_ed25519.pub rpi2
-ssh-copy-id -i ~/.ssh/id_ed25519.pub htpc
+#ssh-copy-id -i ~/.ssh/id_ed25519.pub pi@pihole
+#ssh-copy-id -i ~/.ssh/id_ed25519.pub root@truenas
+#ssh-copy-id -i ~/.ssh/id_ed25519.pub rpi0
+#ssh-copy-id -i ~/.ssh/id_ed25519.pub rpi1
+#ssh-copy-id -i ~/.ssh/id_ed25519.pub rpi2
+#ssh-copy-id -i ~/.ssh/id_ed25519.pub htpc
 
 chsh -s $(which zsh)
