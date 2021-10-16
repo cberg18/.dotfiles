@@ -130,3 +130,11 @@ nano_syntax_highlighting () {
 git clone https://github.com/scopatz/nanorc.git $HOME/.dotfiles/.nano/nanorc
 ln -sv $HOME/.dotfiles/.nano $HOME/.nano
 }
+
+zsh_autosuggestions () {
+git clone https://github.com/zsh-users/zsh-autosuggestions.git $ZSH_CUSTOM/plugins/zsh-autosuggestions
+}
+
+zsh_syntax_highlighting () {
+  git clone https://github.com/zsh-users/zsh-syntax-highlighting.git $ZSH_CUSTOM/plugins/zsh-syntax-highlighting
+}
