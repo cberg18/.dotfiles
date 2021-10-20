@@ -15,6 +15,7 @@ if [ $LOCAL != $REMOTE ]
 then
     echo "Update available, pulling..."
     git --git-dir=$HOME/.dotfiles/.git --work-tree=$HOME/.dotfiles pull
+    source ~/.zshrc
 else [ $LOCAL = $REMOTE ]
 fi
 
