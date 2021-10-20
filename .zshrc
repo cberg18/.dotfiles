@@ -120,6 +120,7 @@ fi
 
 alias cp="cp -v"
 alias lls="ls -la"
+alias kube="microk8s kubectl"
 
 export PYTHONSTARTUP=$HOME/.pythonrc
 
