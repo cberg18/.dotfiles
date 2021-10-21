@@ -1,6 +1,9 @@
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
+#get the current wallpaper
+wallpaper=$(gsettings get org.gnome.desktop.background picture-uri | cut -c 9- | rev | cut -c 2- | rev)
+
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
 
@@ -123,8 +126,15 @@ alias lls="ls -la"
 
 export PYTHONSTARTUP=$HOME/.pythonrc
 
+#set the shell theme if pywal is installed
+PYWAL=$(which wal)
+[ -f $PYWAL ] && wal -i $wallpaper
+
+#print a cool tree
 CBONSAI=$(which cbonsai)
 [ -f $CBONSAI ] && cbonsai -p
+
+
 
 nano_syntax_highlighting () {
 git clone https://github.com/scopatz/nanorc.git $HOME/.dotfiles/.nano/nanorc
@@ -137,4 +147,9 @@ git clone https://github.com/zsh-users/zsh-autosuggestions.git $ZSH_CUSTOM/plugi
 
 zsh_syntax_highlighting () {
   git clone https://github.com/zsh-users/zsh-syntax-highlighting.git $ZSH_CUSTOM/plugins/zsh-syntax-highlighting
+}
+
+color_themes () {
+  sudo apt install imagemagick
+  sudo pip install pywal
 }
