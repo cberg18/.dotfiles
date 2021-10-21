@@ -18,6 +18,7 @@ if [ $LOCAL != $REMOTE ]
 then
     echo "Update available, pulling..."
     git --git-dir=$HOME/.dotfiles/.git --work-tree=$HOME/.dotfiles pull
+    source ~/.zshrc
 else [ $LOCAL = $REMOTE ]
 fi
 
@@ -123,6 +124,7 @@ fi
 
 alias cp="cp -v"
 alias lls="ls -la"
+alias kube="microk8s kubectl"
 
 export PYTHONSTARTUP=$HOME/.pythonrc
 
