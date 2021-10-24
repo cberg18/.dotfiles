@@ -128,10 +128,6 @@ alias kube="microk8s kubectl"
 
 export PYTHONSTARTUP=$HOME/.pythonrc
 
-#set the shell theme if pywal is installed
-PYWAL=$(which wal)
-[ -f $PYWAL ] && wal -i $wallpaper
-
 #print a cool tree
 CBONSAI=$(which cbonsai)
 [ -f $CBONSAI ] && cbonsai -p
