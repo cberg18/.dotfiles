@@ -57,7 +57,7 @@ sudo add-apt-repository ppa:libratbag-piper/piper-libratbag-git
 echo "Add Steam repo to apt"
 sudo add-apt-repository multiverse
 
-PACKAGE_LIST=(python3 python3-pip dirmngr gnupg apt-transport-https ca-certificates software-properties-common zsh sublime-text git curl wget apt-transport-https code gh steam syncthing gnome-tweaks piper vlc cifs-utils)
+PACKAGE_LIST=(snapd python3 python3-pip dirmngr gnupg apt-transport-https ca-certificates software-properties-common zsh sublime-text git curl wget apt-transport-https code gh steam syncthing gnome-tweaks piper vlc cifs-utils libncursesw5-dev)
 
 sudo apt update
 
@@ -84,6 +84,17 @@ git clone https://github.com/zsh-users/zsh-syntax-highlighting.git "$ZSH_CUSTOM"
 echo "=> Installing additional nano syntax highlighting"
 curl https://raw.githubusercontent.com/scopatz/nanorc/master/install.sh | sh
 
+echo "=> Adding a bonsai tree"
+git clone https://gitlab.com/jallbrit/cbonsai
+cd cbonsai
+
+# install for this user
+make install PREFIX=~/.local
+
+# install for all users
+sudo make install
+
+cd ~/
 
 ################################################################################################################################################################################################################################################
 
