@@ -8,22 +8,22 @@ export RPS1C=034
 case $HOST in
 
   pop-os)
-  export RPS1C=034
+  export RPS1C=083
   export CPS1='φ'
   ;;
 
   razer)
-  export RPS1C=034
+  export RPS1C=083
   export CPS1='ε'
   ;;
 
   htpc)
-  export RPS1C=034
+  export RPS1C=083
   export CPS1='Ξ'
   ;;
 
   pihole)
-  export RPS1C=034
+  export RPS1C=083
   export CPS1='ϐ'
   ;;
 
@@ -43,7 +43,7 @@ case $HOST in
   ;;
 
   rpi3)
-  export RPS1C=034
+  export RPS1C=083
   export CPS1='¤³'
   ;;
    
