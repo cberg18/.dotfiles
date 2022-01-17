@@ -59,6 +59,8 @@ REMOTE=$(git --git-dir=$HOME/.dotfiles/.git --work-tree=$HOME/.dotfiles rev-pars
 
 if [ $LOCAL != $REMOTE ]
 then
+    echo "Stashing local changes, if there are any..."
+    git stash -q
     echo "Update available, pulling..."
     git --git-dir=$HOME/.dotfiles/.git --work-tree=$HOME/.dotfiles pull
     source ~/.zshrc
