@@ -7,30 +7,46 @@ export RPS1C=034
 #set right prompt color and prompt symbol based on the host
 case $HOST in
 
-  "desktop")
+  pop-os)
   export RPS1C=034
-   #export CPS1='»'
+  export CPS1='φ'
   ;;
 
-  "razer")
+  razer)
   export RPS1C=034
-   #export CPS1='»'
+  export CPS1='ε'
   ;;
 
-  "htpc")
+  htpc)
   export RPS1C=034
-   #export CPS1='»'
+  export CPS1='Ξ'
   ;;
 
-  "pihole")
+  pihole)
   export RPS1C=034
-   #export CPS1='»'
+  export CPS1='ϐ'
   ;;
 
-  "truenas")
+  truenas)
   export RPS1C=034
-   #export CPS1='»'
+  export CPS1='†'
   ;;
+  
+  rpi1)
+  export RPS1C=034
+  export CPS1='¤¹'
+  ;;
+  
+  rpi2)
+  export RPS1C=034
+  export CPS1='¤²'
+  ;;
+
+  rpi3)
+  export RPS1C=034
+  export CPS1='¤³'
+  ;;
+   
 esac
 
 
