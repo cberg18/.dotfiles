@@ -2,6 +2,7 @@
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
+export RPS1C=034
 
 git --git-dir=$HOME/.dotfiles/.git --work-tree=$HOME/.dotfiles fetch
 
@@ -127,8 +128,6 @@ export PYTHONSTARTUP=$HOME/.pythonrc
 #print a cool tree
 CBONSAI=$(which cbonsai)
 [ -f $CBONSAI ] && cbonsai -p
-
-
 
 nano_syntax_highlighting () {
 git clone https://github.com/scopatz/nanorc.git $HOME/.dotfiles/.nano/nanorc
