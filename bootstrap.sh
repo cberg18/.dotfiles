@@ -118,6 +118,16 @@ else
     echo "=> Your zshrc has already been linked. "
 fi
 
+#link custom theme
+if [ ! -L ~/.oh-my-zsh/custom/themes/af-magic.zsh-theme ]
+then
+    rm ~/.oh-my-zsh/custom/themes/af-magic.zsh-theme
+    echo "=> Linking your theme. "
+    ln -sv ~/.dotfiles/custom/af-magic.zsh-theme ~/.oh-my-zsh/custom/themes/af-magic.zsh-theme
+else
+    echo "=> Your theme has already been linked. "
+fi
+
 if [ ! -L ~/.gitconfig ]
 then
     echo "=> Linking your gitfconfig. "
