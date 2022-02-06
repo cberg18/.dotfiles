@@ -32,17 +32,17 @@ case $HOST in
   export CPS1='†'
   ;;
   
-  rpi1)
+  rpi0)
   export RPS1C=034
   export CPS1='¤¹'
   ;;
   
-  rpi2)
+  rpi1)
   export RPS1C=034
   export CPS1='¤²'
   ;;
 
-  rpi3)
+  rpi2)
   export RPS1C=083
   export CPS1='¤³'
   ;;
@@ -57,8 +57,9 @@ LOCAL=$(git --git-dir=$HOME/.dotfiles/.git --work-tree=$HOME/.dotfiles rev-parse
 REMOTE=$(git --git-dir=$HOME/.dotfiles/.git --work-tree=$HOME/.dotfiles rev-parse "$UPSTREAM")
 
 
-if [ $LOCAL != $REMOTE ]
-then
+if [ ! -f $HOME/.dotfiles/.git ]; then
+  git clone https://github.com/cberg18/.dotfiles.git ~/.dotfiles
+elif [ $LOCAL != $REMOTE ]; then
     echo "Stashing local changes, if there are any..."
     git stash -q
     echo "Update available, pulling..."
