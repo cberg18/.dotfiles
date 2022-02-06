@@ -7,7 +7,7 @@ export RPS1C=034
 #set right prompt color and prompt symbol based on the host
 case $HOST in
 
-  pop-os)
+  desktop)
   export RPS1C=083
   export CPS1='φ'
   ;;
