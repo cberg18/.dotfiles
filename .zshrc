@@ -57,8 +57,8 @@ LOCAL=$(git --git-dir=$HOME/.dotfiles/.git --work-tree=$HOME/.dotfiles rev-parse
 REMOTE=$(git --git-dir=$HOME/.dotfiles/.git --work-tree=$HOME/.dotfiles rev-parse "$UPSTREAM")
 
 
-if [ ! -f $HOME/.dotfiles/.git ]; then
-  git clone https://github.com/cberg18/.dotfiles.git ~/.dotfiles
+if [ ! -d $HOME/.dotfiles/.git ]; then
+  git clone https://github.com/cberg18/.dotfiles.git ~/.dotfiles  
 elif [ $LOCAL != $REMOTE ]; then
     echo "Stashing local changes, if there are any..."
     git stash -q
