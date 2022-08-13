@@ -37,9 +37,10 @@ sudo apt update
 echo "Install apt based programs"
 sudo apt install -y "${PACKAGE_LIST[@]}"
 
-
 echo "Install oh-my-zsh"
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
+
+mkdir -p $HOME/.oh-my-zsh/custom/plugins/{zsh-syntax-highlighting,zsh-autosuggestions}
 
 echo "=> Installing ZSH Autosuggestions"
 git clone https://github.com/zsh-users/zsh-autosuggestions.git "$ZSH_CUSTOM"/plugins/zsh-autosuggestions
