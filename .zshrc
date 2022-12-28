@@ -191,3 +191,5 @@ zsh_syntax_highlighting () {
   git clone https://github.com/zsh-users/zsh-syntax-highlighting.git $ZSH_CUSTOM/plugins/zsh-syntax-highlighting
 }
 
+# add autocompletion for 1password
+eval "$(op completion zsh)"; compdef _op op
