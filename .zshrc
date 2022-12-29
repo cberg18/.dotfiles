@@ -179,8 +179,8 @@ CBONSAI=$(which cbonsai)
 [ -f $CBONSAI ] && cbonsai -p
 
 # add autocompletion for 1password
-CBONSAI=$(which op)
-[ -f $CBONSAI ] && cbonsai -p
+OP=$(which op)
+[ -f $OP ] && eval "$(op completion zsh)"; compdef _op op
 
 nano_syntax_highlighting () {
 git clone https://github.com/scopatz/nanorc.git $HOME/.dotfiles/.nano/nanorc
