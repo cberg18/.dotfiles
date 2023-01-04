@@ -10,7 +10,7 @@ echo "Add GitHub CLI Tool GPG Key"
 curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo gpg --dearmor -o /usr/share/keyrings/githubcli-archive-keyring.gpg
 echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list > /dev/null
 
-PACKAGE_LIST=(python3 python3-pip dirmngr gnupg apt-transport-https ca-certificates software-properties-common zsh git curl wget apt-transport-https gh cifs-utils)
+PACKAGE_LIST=(python3 python3-pip dirmngr gnupg apt-transport-https ca-certificates software-properties-common zsh git curl wget apt-transport-https gh cifs-utils unzip)
 
 sudo apt update
 
@@ -23,10 +23,10 @@ sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/too
 mkdir -p $HOME/.oh-my-zsh/custom/plugins/{zsh-syntax-highlighting,zsh-autosuggestions}
 
 echo "=> Installing ZSH Autosuggestions"
-git clone https://github.com/zsh-users/zsh-autosuggestions.git "$ZSH_CUSTOM"/plugins/zsh-autosuggestions
+git clone https://github.com/zsh-users/zsh-autosuggestions.git "$HOME/.oh-my-zsh/custom"/plugins/zsh-autosuggestions
 
 echo "=> Installing ZSH Syntax Highlighting"
-git clone https://github.com/zsh-users/zsh-syntax-highlighting.git "$ZSH_CUSTOM"/plugins/zsh-syntax-highlighting
+git clone https://github.com/zsh-users/zsh-syntax-highlighting.git "$HOME/.oh-my-zsh/custom"/plugins/zsh-syntax-highlighting
 
 echo "=> Installing additional nano syntax highlighting"
 curl https://raw.githubusercontent.com/scopatz/nanorc/master/install.sh | sh
@@ -34,20 +34,20 @@ curl https://raw.githubusercontent.com/scopatz/nanorc/master/install.sh | sh
 
 ################################################################################################################################################################################################################################################
 
-mkdir ~/.dotfiles
+mkdir -p ~/.dotfiles
 git clone https://github.com/cberg18/.dotfiles.git ~/.dotfiles
 
 #remove the default .zshrc
 if [ -e ~/.zshrc ]
 then
     echo "=> Removing default .zshrc. "
-    rm ~/.zshrc
+    rm -f ~/.zshrc
 fi
 
 #link your .zshrc
 if [ ! -L ~/.zshrc ]
 then
-    rm ~/.zshrc
+    rm -f ~/.zshrc
     echo "=> Linking your zshrc. "
     ln -sv ~/.dotfiles/.zshrc ~/.zshrc
 else
@@ -57,7 +57,7 @@ fi
 #link custom theme
 if [ ! -L ~/.oh-my-zsh/custom/themes/af-magic.zsh-theme ]
 then
-    rm ~/.oh-my-zsh/custom/themes/af-magic.zsh-theme
+    rm -f ~/.oh-my-zsh/custom/themes/af-magic.zsh-theme
     echo "=> Linking your theme. "
     ln -sv ~/.dotfiles/custom/af-magic.zsh-theme ~/.oh-my-zsh/custom/themes/af-magic.zsh-theme
 else
