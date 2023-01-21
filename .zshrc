@@ -53,19 +53,22 @@ esac
 git --git-dir=$HOME/.dotfiles/.git --work-tree=$HOME/.dotfiles fetch
 
 UPSTREAM=${1:-'@{u}'}
+
 LOCAL=$(git --git-dir=$HOME/.dotfiles/.git --work-tree=$HOME/.dotfiles rev-parse @)
+
 REMOTE=$(git --git-dir=$HOME/.dotfiles/.git --work-tree=$HOME/.dotfiles rev-parse "$UPSTREAM")
 
 
 if [ ! -d $HOME/.dotfiles/.git ]; then
   git clone https://github.com/cberg18/.dotfiles.git ~/.dotfiles  
 elif [ $LOCAL != $REMOTE ]; then
-    echo "Stashing local changes, if there are any..."
-    git --git-dir=$HOME/.dotfiles/.git --work-tree=$HOME/.dotfiles stash -q
-    echo "Update available, pulling..."
+    echo "Update available..."
+    git --git-dir=$HOME/.dotfiles/.git --work-tree=$HOME/.dotfiles reset -q --hard
     git --git-dir=$HOME/.dotfiles/.git --work-tree=$HOME/.dotfiles pull
     source ~/.zshrc
+    exit
 else [ $LOCAL = $REMOTE ]
+    echo ".dotfiles are up to date"
 fi
 
 # Set name of the theme to load --- if set to "random", it will
