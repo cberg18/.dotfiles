@@ -185,6 +185,9 @@ CBONSAI=$(which cbonsai)
 OP=$(which op)
 [ -f $OP ] && eval "$(op completion zsh)"; compdef _op op
 
+[ -f /home/cberg18/.config/op/plugins.sh ] && source /home/cberg18/.config/op/plugins.sh
+
+
 nano_syntax_highlighting () {
 git clone https://github.com/scopatz/nanorc.git $HOME/.dotfiles/.nano/nanorc
 ln -sv $HOME/.dotfiles/.nano $HOME/.nano
@@ -197,4 +200,3 @@ git clone https://github.com/zsh-users/zsh-autosuggestions.git $ZSH_CUSTOM/plugi
 zsh_syntax_highlighting () {
   git clone https://github.com/zsh-users/zsh-syntax-highlighting.git $ZSH_CUSTOM/plugins/zsh-syntax-highlighting
 }
-source /home/cberg18/.config/op/plugins.sh
