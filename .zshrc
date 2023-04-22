@@ -7,48 +7,47 @@ export RPS1C=034
 #set right prompt color and prompt symbol based on the host
 case $HOST in
 
-  desktop)
+desktop)
   export RPS1C=083
   export CPS1='φ'
   ;;
 
-  razer)
+razer)
   export RPS1C=083
   export CPS1='ε'
   ;;
 
-  htpc)
+htpc)
   export RPS1C=083
   export CPS1='Ξ'
   ;;
 
-  pihole)
+pihole)
   export RPS1C=083
   export CPS1='ϐ'
   ;;
 
-  truenas)
+truenas)
   export RPS1C=034
   export CPS1='†'
   ;;
-  
-  rpi0)
+
+rpi0)
   export RPS1C=034
   export CPS1='¤¹'
   ;;
-  
-  rpi1)
+
+rpi1)
   export RPS1C=034
   export CPS1='¤²'
   ;;
 
-  rpi2)
+rpi2)
   export RPS1C=083
   export CPS1='¤³'
   ;;
-   
-esac
 
+esac
 
 git --git-dir=$HOME/.dotfiles/.git --work-tree=$HOME/.dotfiles fetch
 
@@ -58,17 +57,17 @@ LOCAL=$(git --git-dir=$HOME/.dotfiles/.git --work-tree=$HOME/.dotfiles rev-parse
 
 REMOTE=$(git --git-dir=$HOME/.dotfiles/.git --work-tree=$HOME/.dotfiles rev-parse "$UPSTREAM")
 
-
 if [ ! -d $HOME/.dotfiles/.git ]; then
-  git clone https://github.com/cberg18/.dotfiles.git ~/.dotfiles  
+  git clone https://github.com/cberg18/.dotfiles.git ~/.dotfiles
 elif [ $LOCAL != $REMOTE ]; then
-    echo "Update available..."
-    git --git-dir=$HOME/.dotfiles/.git --work-tree=$HOME/.dotfiles reset -q --hard
-    git --git-dir=$HOME/.dotfiles/.git --work-tree=$HOME/.dotfiles pull
-    source ~/.zshrc
-    exit
-else [ $LOCAL = $REMOTE ]
-    echo ".dotfiles are up to date"
+  echo "Update available..."
+  git --git-dir=$HOME/.dotfiles/.git --work-tree=$HOME/.dotfiles reset -q --hard
+  git --git-dir=$HOME/.dotfiles/.git --work-tree=$HOME/.dotfiles pull
+  source ~/.zshrc
+  exit
+else
+  [ $LOCAL = $REMOTE ]
+  echo ".dotfiles are up to date"
 fi
 
 # Set name of the theme to load --- if set to "random", it will
@@ -136,7 +135,7 @@ DISABLE_UNTRACKED_FILES_DIRTY="true"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=( git git-prompt python pip zsh-autosuggestions zsh-syntax-highlighting docker docker-compose 1password)
+plugins=(git git-prompt python pip zsh-autosuggestions zsh-syntax-highlighting docker docker-compose 1password)
 
 # Helpful github gist for installing zsh_autosuggestions and zsy-syntax-highlighting
 # https://gist.github.com/dogrocker/1efb8fd9427779c827058f873b94df95
@@ -184,20 +183,20 @@ CBONSAI=$(which cbonsai)
 
 # add autocompletion for 1password
 OP=$(which op)
-[ -f $OP ] && eval "$(op completion zsh)"; compdef _op op
+[ -f $OP ] && eval "$(op completion zsh)"
+compdef _op op
 
 [ -f /home/cberg18/.config/op/plugins.sh ] && source /home/cberg18/.config/op/plugins.sh
 
-
-nano_syntax_highlighting () {
-git clone https://github.com/scopatz/nanorc.git $HOME/.dotfiles/.nano/nanorc
-ln -sv $HOME/.dotfiles/.nano $HOME/.nano
+nano_syntax_highlighting() {
+  git clone https://github.com/scopatz/nanorc.git $HOME/.dotfiles/.nano/nanorc
+  ln -sv $HOME/.dotfiles/.nano $HOME/.nano
 }
 
-zsh_autosuggestions () {
-git clone https://github.com/zsh-users/zsh-autosuggestions.git $ZSH_CUSTOM/plugins/zsh-autosuggestions
+zsh_autosuggestions() {
+  git clone https://github.com/zsh-users/zsh-autosuggestions.git $ZSH_CUSTOM/plugins/zsh-autosuggestions
 }
 
-zsh_syntax_highlighting () {
+zsh_syntax_highlighting() {
   git clone https://github.com/zsh-users/zsh-syntax-highlighting.git $ZSH_CUSTOM/plugins/zsh-syntax-highlighting
 }
