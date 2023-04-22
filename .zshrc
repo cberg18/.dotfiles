@@ -188,6 +188,8 @@ compdef _op op
 
 [ -f /home/cberg18/.config/op/plugins.sh ] && source /home/cberg18/.config/op/plugins.sh
 
+ln -sf  ~/.dotfiles/custom/* $ZSH_CUSTOM/themes 
+
 nano_syntax_highlighting() {
   git clone https://github.com/scopatz/nanorc.git $HOME/.dotfiles/.nano/nanorc
   ln -sv $HOME/.dotfiles/.nano $HOME/.nano
