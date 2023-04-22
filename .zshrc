@@ -9,42 +9,42 @@ case $HOST in
 
 desktop)
   export RPS1C=083
-  export CPS1='φ'
+  export CPS1='--φ'
   ;;
 
 razer)
   export RPS1C=083
-  export CPS1='ε'
+  export CPS1='--ε'
   ;;
 
 htpc)
   export RPS1C=083
-  export CPS1='Ξ'
+  export CPS1='--Ξ'
   ;;
 
 pihole)
   export RPS1C=083
-  export CPS1='ϐ'
+  export CPS1='--ϐ'
   ;;
 
 truenas)
   export RPS1C=034
-  export CPS1='†'
+  export CPS1='--†'
   ;;
 
 rpi0)
   export RPS1C=034
-  export CPS1='¤¹'
+  export CPS1='--¤¹'
   ;;
 
 rpi1)
   export RPS1C=034
-  export CPS1='¤²'
+  export CPS1='--¤²'
   ;;
 
 rpi2)
   export RPS1C=083
-  export CPS1='¤³'
+  export CPS1='--¤³'
   ;;
 
 esac
