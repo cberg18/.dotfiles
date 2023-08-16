@@ -1,6 +1,7 @@
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 # Path to your oh-my-zsh installation.
+export PATH="$HOME/.local/bin:$PATH"
 export ZSH="$HOME/.oh-my-zsh"
 export RPS1C=034
 
@@ -32,17 +33,17 @@ truenas)
   export CPS1='--†'
   ;;
 
-rpi0)
+cluster1)
   export RPS1C=034
   export CPS1='--¤¹'
   ;;
 
-rpi1)
+cluster2)
   export RPS1C=034
   export CPS1='--¤²'
   ;;
 
-rpi2)
+cluster3)
   export RPS1C=083
   export CPS1='--¤³'
   ;;
