@@ -6,3 +6,5 @@
 [user]
 	email = cberg18@gmail.com
 	name = Cory Berg
+[init]
+	defaultBranch = main
