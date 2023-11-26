@@ -13,7 +13,7 @@ desktop)
   export CPS1='--φ'
   ;;
 
-razer)
+laptop)
   export RPS1C=083
   export CPS1='--ε'
   ;;
@@ -21,11 +21,6 @@ razer)
 htpc)
   export RPS1C=083
   export CPS1='--Ξ'
-  ;;
-
-pihole)
-  export RPS1C=083
-  export CPS1='--ϐ'
   ;;
 
 truenas)
@@ -46,6 +41,11 @@ cluster2)
 cluster3)
   export RPS1C=083
   export CPS1='--¤³'
+  ;;
+
+steamdeck)
+  export RPS1C=083
+  export CPS1='-->'
   ;;
 
 esac
