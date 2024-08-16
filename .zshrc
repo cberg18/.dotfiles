@@ -39,8 +39,13 @@ cluster2)
   ;;
 
 cluster3)
-  export RPS1C=083
+  export RPS1C=034
   export CPS1='--¤³'
+  ;;
+
+cluster4)
+  export RPS1C=034
+  export CPS1='--4'
   ;;
 
 steamdeck)
