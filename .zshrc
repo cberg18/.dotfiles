@@ -81,7 +81,8 @@ fi
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
 #ZSH_THEME="af-magic"
-if [[ -v $isVSCode ]]; then
+if [[ $isVSCode ]]; then
+  echo "setting vscode theme"
   ZSH_THEME="af-magic"
 else
   ZSH_THEME="frontcube" # this theme is broken in vscode terminal
@@ -198,7 +199,7 @@ compdef _op op
 
 [ -f /home/cberg18/.config/op/plugins.sh ] && source /home/cberg18/.config/op/plugins.sh
 
-ln -sf  ~/.dotfiles/custom/* $ZSH_CUSTOM/themes 
+ln -sf ~/.dotfiles/custom/* $ZSH_CUSTOM/themes
 
 nano_syntax_highlighting() {
   git clone https://github.com/scopatz/nanorc.git $HOME/.dotfiles/.nano/nanorc
