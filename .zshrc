@@ -4,6 +4,9 @@
 export PATH="$HOME/.local/bin:$PATH"
 export ZSH="$HOME/.oh-my-zsh"
 export RPS1C=034
+bindkey '^[[1;5D' backward-word
+bindkey '^[[1;5C' forward-word
+
 
 #set right prompt color and prompt symbol based on the host
 case $HOST in
