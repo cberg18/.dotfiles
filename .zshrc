@@ -187,7 +187,9 @@ fi
 
 alias cp="cp -v"
 alias lls="ls -la"
-alias kube="microk8s kubectl"
+alias stockbot="code ~/Documents/code/StockBot"
+alias labOps="code ~/Documents/code/labOps"
+alias configs="code /mnt/configs"
 
 export PYTHONSTARTUP=$HOME/.pythonrc
 
