@@ -187,9 +187,9 @@ fi
 
 alias cp="cp -v"
 alias lls="ls -la"
-alias stockbot="code ~/Documents/code/StockBot"
-alias labOps="code ~/Documents/code/labOps"
-alias configs="code /mnt/configs"
+alias stockbot="code ~/Documents/code/StockBot && ~/Documents/code/StockBot"
+alias labOps="code ~/Documents/code/labOps && ~/Documents/code/labOps"
+alias configs="code /mnt/configs && cd /mnt/configs"
 
 export PYTHONSTARTUP=$HOME/.pythonrc
 
