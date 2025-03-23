@@ -1,0 +1,42 @@
+// Zed settings
+//
+// For information on how to configure Zed, see the Zed
+// documentation: https://zed.dev/docs/configuring-zed
+//
+// To see all of Zed's default settings without changing your
+// custom settings, run the `open default settings` command
+// from the command palette or from `Zed` application menu.
+{
+  "features": {
+    "edit_prediction_provider": "zed"
+  },
+  "ui_font_size": 16,
+  "buffer_font_size": 16,
+  "theme": {
+    "mode": "system",
+    "light": "One Light",
+    "dark": "monokai Darker Classic"
+  },
+  "show_whitespaces": "boundary",
+  "indent_guides": {
+    // Whether to show indent guides in the editor.
+    "enabled": true,
+    // The width of the indent guides in pixels, between 1 and 10.
+    "line_width": 1,
+    // The width of the active indent guide in pixels, between 1 and 10.
+    "active_line_width": 3,
+    // Determines how indent guides are colored.
+    // This setting can take the following three values:
+    ///
+    // 1. "disabled"
+    // 2. "fixed"
+    // 3. "indent_aware"
+    "coloring": "indent_aware",
+    // Determines how indent guide backgrounds are colored.
+    // This setting can take the following two values:
+    ///
+    // 1. "disabled"
+    // 2. "indent_aware"
+    "background_coloring": "disabled"
+  }
+}
