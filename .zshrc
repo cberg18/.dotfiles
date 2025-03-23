@@ -7,7 +7,6 @@ export RPS1C=034
 bindkey '^[[1;5D' backward-word
 bindkey '^[[1;5C' forward-word
 
-
 #set right prompt color and prompt symbol based on the host
 case $HOST in
 
@@ -190,6 +189,9 @@ alias lls="ls -la"
 alias stockbot="code ~/Documents/code/StockBot && ~/Documents/code/StockBot"
 alias labOps="code ~/Documents/code/labOps && ~/Documents/code/labOps"
 alias configs="code /mnt/configs && cd /mnt/configs"
+alias zstockbot="zed ~/Documents/code/StockBot && ~/Documents/code/StockBot"
+alias zlabOps="zed ~/Documents/code/labOps && ~/Documents/code/labOps"
+alias zconfigs="zed /mnt/configs && cd /mnt/configs"
 
 export PYTHONSTARTUP=$HOME/.pythonrc
 
@@ -204,7 +206,28 @@ compdef _op op
 
 [ -f /home/cberg18/.config/op/plugins.sh ] && source /home/cberg18/.config/op/plugins.sh
 
+if ! test -h ~/.zshrc ; then
+  ln -sv ~/.dotfiles/.zshrc ~/.zshrc
+fi
+
+if ! test -h ~/.pythonrc ; then
+  ln -sv ~/.dotfiles/.pythonrc ~/.pythonrc
+fi
+
+if ! test -h ~/.nanrc ; then
+  ln -sv ~/.dotfiles/.nanrc ~/.nanrc
+fi
+
+if ! test -h ~/.nano ; then
+  ln -sv ~/.dotfiles/.nano ~/.nano
+fi
+
+if ! test -L ~/.config/zed/settings.json ; then
+  ln -sv ~/.dotfiles/zed/settings.json ~/.config/zed/settings.json
+fi
+
 ln -sf ~/.dotfiles/custom/* $ZSH_CUSTOM/themes
+
 
 nano_syntax_highlighting() {
   git clone https://github.com/scopatz/nanorc.git $HOME/.dotfiles/.nano/nanorc
