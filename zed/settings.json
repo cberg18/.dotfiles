@@ -7,6 +7,22 @@
 // custom settings, run the `open default settings` command
 // from the command palette or from `Zed` application menu.
 {
+  "ssh_connections": [
+    {
+      "host": "desktop",
+      "projects": [
+        {
+          "paths": ["~/Documents"]
+        },
+        {
+          "paths": ["~/Documents/code/StockBot"]
+        },
+        {
+          "paths": ["~/Documents/code/labOps"]
+        }
+      ]
+    }
+  ],
   "features": {
     "edit_prediction_provider": "zed"
   },
@@ -15,7 +31,7 @@
   "theme": {
     "mode": "system",
     "light": "One Light",
-    "dark": "monokai Darker Classic"
+    "dark": "VSCode Dark Modern"
   },
   "show_whitespaces": "boundary",
   "indent_guides": {

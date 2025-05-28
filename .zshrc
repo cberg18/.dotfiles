@@ -67,8 +67,11 @@ REMOTE=$(git --git-dir=$HOME/.dotfiles/.git --work-tree=$HOME/.dotfiles rev-pars
 
 if [ ! -d $HOME/.dotfiles/.git ]; then
   git clone https://github.com/cberg18/.dotfiles.git ~/.dotfiles
+elif [ -f $HOME/.dotfiles/.resume ]; then
+  rm ~/.dotfiles/.resume
 elif [ $LOCAL != $REMOTE ]; then
   echo "Update available..."
+  touch ~/.dotfiles/.resume
   git --git-dir=$HOME/.dotfiles/.git --work-tree=$HOME/.dotfiles reset -q --hard
   git --git-dir=$HOME/.dotfiles/.git --work-tree=$HOME/.dotfiles pull
   source ~/.zshrc
@@ -192,6 +195,7 @@ alias configs="code /mnt/configs && cd /mnt/configs"
 alias zstockbot="zed ~/Documents/code/StockBot && ~/Documents/code/StockBot"
 alias zlabOps="zed ~/Documents/code/labOps && ~/Documents/code/labOps"
 alias zconfigs="zed /mnt/configs && cd /mnt/configs"
+alias zdotfiles="zed ~/.dotfiles && cd ~/.dotfiles"
 
 export PYTHONSTARTUP=$HOME/.pythonrc
 
@@ -223,7 +227,7 @@ if ! test -h ~/.nano ; then
 fi
 
 if ! test -L ~/.config/zed/settings.json ; then
-  ln -sv ~/.dotfiles/zed/settings.json ~/.config/zed/settings.json
+  ln -sv ~/.dotfiles/zed/settings.json ~/.config/zed/settings.json > /dev/null
 fi
 
 ln -sf ~/.dotfiles/custom/* $ZSH_CUSTOM/themes
