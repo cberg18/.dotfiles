@@ -234,7 +234,7 @@ ln -sf ~/.dotfiles/custom/* $ZSH_CUSTOM/themes
 
 
 nano_syntax_highlighting() {
-  git clone https://github.com/scopatz/nanorc.git $HOME/.dotfiles/.nano/nanorc
+  git clone https://github.com/scopatz/nanorc.git $HOME/.dotfiles/.nano
   ln -sv $HOME/.dotfiles/.nano $HOME/.nano
 }
 
