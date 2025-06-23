@@ -20,24 +20,16 @@
       "host": "desktop",
       "projects": [
         {
-          "paths": [
-            "/home/cberg18/Documents/code/role-docker-tls"
-          ]
+          "paths": ["/home/cberg18/Documents/code/role-docker-tls"]
         },
         {
-          "paths": [
-            "~/Documents"
-          ]
+          "paths": ["~/Documents"]
         },
         {
-          "paths": [
-            "~/Documents/code/StockBot"
-          ]
+          "paths": ["~/Documents/code/StockBot"]
         },
         {
-          "paths": [
-            "~/Documents/code/labOps"
-          ]
+          "paths": ["~/Documents/code/labOps"]
         }
       ]
     }
@@ -45,12 +37,24 @@
   "features": {
     "edit_prediction_provider": "zed"
   },
+  "terminal": {
+    "detect_venv": {
+      "on": {
+        // Default directories to search for virtual environments, relative
+        // to the current working directory. We recommend overriding this
+        // in your project's settings, rather than globally.
+        "directories": [".env", "env", ".venv", "venv"],
+        // Can also be `csh`, `fish`, and `nushell`
+        "activate_script": "default"
+      }
+    }
+  },
   "ui_font_size": 16,
   "buffer_font_size": 16,
   "theme": {
     "mode": "system",
     "light": "One Light",
-    "dark": "monokai Darker Classic"
+    "dark": "One Dark Pro Monokai Darker"
   },
   "show_whitespaces": "boundary",
   "indent_guides": {
