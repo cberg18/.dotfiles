@@ -7,6 +7,14 @@
 // custom settings, run the `open default settings` command
 // from the command palette or from `Zed` application menu.
 {
+  "agent": {
+    "model_parameters": [],
+    "default_model": {
+      "provider": "ollama",
+      "model": "gemma3:12b"
+    },
+    "version": "2"
+  },
   "ssh_connections": [
     {
       "host": "desktop",
@@ -31,7 +39,7 @@
   "theme": {
     "mode": "system",
     "light": "One Light",
-    "dark": "VSCode Dark Modern"
+    "dark": "monokai Darker Classic"
   },
   "show_whitespaces": "boundary",
   "indent_guides": {
@@ -54,5 +62,49 @@
     // 1. "disabled"
     // 2. "indent_aware"
     "background_coloring": "disabled"
+  },
+  "file_types": {
+    "Ansible": [
+      "**.ansible.yml",
+      "**.ansible.yaml",
+      "**/defaults/*.yml",
+      "**/defaults/*.yaml",
+      "**/meta/*.yml",
+      "**/meta/*.yaml",
+      "**/tasks/*.yml",
+      "**/tasks/*.yaml",
+      "**/handlers/*.yml",
+      "**/handlers/*.yaml",
+      "**/group_vars/*.yml",
+      "**/group_vars/*.yaml",
+      "**/playbooks/*.yaml",
+      "**/playbooks/*.yml",
+      "**playbook*.yaml",
+      "**playbook*.yml"
+    ]
+  },
+  "lsp": {
+    "ansible-language-server": {
+      "settings": {
+        // Note: the Zed Ansible extension prefixes all settings with the `ansible` key to provide for a cleaner config under here.
+        // So instead of using `ansible.ansible.path` use `ansible.path`and so on.
+        "ansible": {
+          "path": "ansible"
+        },
+        "executionEnvironment": {
+          "enabled": false
+        },
+        "python": {
+          "interpreterPath": "python3"
+        },
+        "validation": {
+          "enabled": false, //disable validation
+          "lint": {
+            "enabled": false, //disable ansible-lint
+            "path": "ansible-lint"
+          }
+        }
+      }
+    }
   }
 }
