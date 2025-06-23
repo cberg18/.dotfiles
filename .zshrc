@@ -4,6 +4,7 @@
 export PATH="$HOME/.local/bin:$PATH"
 export ZSH="$HOME/.oh-my-zsh"
 export RPS1C=034
+export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=green,bg=bold"
 bindkey '^[[1;5D' backward-word
 bindkey '^[[1;5C' forward-word
 
