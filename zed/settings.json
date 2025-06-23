@@ -12,13 +12,24 @@
       "host": "desktop",
       "projects": [
         {
-          "paths": ["~/Documents"]
+          "paths": [
+            "/home/cberg18/Documents/code/role-docker-tls"
+          ]
         },
         {
-          "paths": ["~/Documents/code/StockBot"]
+          "paths": [
+            "~/Documents"
+          ]
         },
         {
-          "paths": ["~/Documents/code/labOps"]
+          "paths": [
+            "~/Documents/code/StockBot"
+          ]
+        },
+        {
+          "paths": [
+            "~/Documents/code/labOps"
+          ]
         }
       ]
     }
