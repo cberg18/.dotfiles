@@ -54,7 +54,7 @@
   "theme": {
     "mode": "system",
     "light": "One Light",
-    "dark": "One Dark Pro Monokai Darker"
+    "dark": "monokai Darker Classic"
   },
   "show_whitespaces": "boundary",
   "indent_guides": {
