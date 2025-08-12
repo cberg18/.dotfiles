@@ -56,6 +56,11 @@ steamdeck)
   export CPS1='-->'
   ;;
 
+gcp1)
+  export RPS1C=034
+  export CPS1='--🌩'
+  ;;
+
 esac
 
 git --git-dir=$HOME/.dotfiles/.git --work-tree=$HOME/.dotfiles fetch
@@ -232,7 +237,6 @@ if ! test -L ~/.config/zed/settings.json ; then
 fi
 
 ln -sf ~/.dotfiles/custom/* $ZSH_CUSTOM/themes
-
 
 nano_syntax_highlighting() {
   git clone https://github.com/scopatz/nanorc.git $HOME/.dotfiles/.nano
