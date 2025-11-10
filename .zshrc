@@ -1,6 +1,32 @@
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 # Path to your oh-my-zsh installation.
+
+if [ $# -eq 0 ]; then
+    git --git-dir=$HOME/.dotfiles/.git --work-tree=$HOME/.dotfiles fetch
+    UPSTREAM=${1:-'@{u}'}
+    LOCAL=$(git --git-dir=$HOME/.dotfiles/.git --work-tree=$HOME/.dotfiles rev-parse @)
+    REMOTE=$(git --git-dir=$HOME/.dotfiles/.git --work-tree=$HOME/.dotfiles rev-parse "$UPSTREAM")
+    if [ ! -d $HOME/.dotfiles/.git ]; then
+        git clone https://github.com/cberg18/.dotfiles.git ~/.dotfiles
+    elif [ -f $HOME/.dotfiles/.resume ]; then
+        rm ~/.dotfiles/.resume
+    elif [ $LOCAL != $REMOTE ]; then
+        echo "Update available..."
+        touch ~/.dotfiles/.resume
+        git --git-dir=$HOME/.dotfiles/.git --work-tree=$HOME/.dotfiles reset -q --hard
+        git --git-dir=$HOME/.dotfiles/.git --work-tree=$HOME/.dotfiles pull
+        source ~/.zshrc update
+        exit
+    else [ $LOCAL = $REMOTE ]
+        echo ".dotfiles are up to date"
+    fi
+elif [ $1 = "update" ]; then
+    echo "updated successfully"
+else
+    echo "somethings weird"
+fi
+
 export PATH="$HOME/.local/bin:$PATH"
 export ZSH="$HOME/.oh-my-zsh"
 export RPS1C=034
@@ -62,30 +88,6 @@ gcp1)
   ;;
 
 esac
-
-git --git-dir=$HOME/.dotfiles/.git --work-tree=$HOME/.dotfiles fetch
-
-UPSTREAM=${1:-'@{u}'}
-
-LOCAL=$(git --git-dir=$HOME/.dotfiles/.git --work-tree=$HOME/.dotfiles rev-parse @)
-
-REMOTE=$(git --git-dir=$HOME/.dotfiles/.git --work-tree=$HOME/.dotfiles rev-parse "$UPSTREAM")
-
-if [ ! -d $HOME/.dotfiles/.git ]; then
-  git clone https://github.com/cberg18/.dotfiles.git ~/.dotfiles
-elif [ -f $HOME/.dotfiles/.resume ]; then
-  rm ~/.dotfiles/.resume
-elif [ $LOCAL != $REMOTE ]; then
-  echo "Update available..."
-  touch ~/.dotfiles/.resume
-  git --git-dir=$HOME/.dotfiles/.git --work-tree=$HOME/.dotfiles reset -q --hard
-  git --git-dir=$HOME/.dotfiles/.git --work-tree=$HOME/.dotfiles pull
-  source ~/.zshrc
-  exit
-else
-  [ $LOCAL = $REMOTE ]
-  echo ".dotfiles are up to date"
-fi
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
