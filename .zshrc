@@ -159,7 +159,7 @@ DISABLE_UNTRACKED_FILES_DIRTY="true"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(thefuck terraform colorize zsh-uv-env git git-prompt python pip alias-finder zsh-autosuggestions zsh-syntax-highlighting docker docker-compose 1password)
+plugins=(thefuck terraform ansible colorize zsh-uv-env git git-prompt python pip alias-finder zsh-autosuggestions zsh-syntax-highlighting docker docker-compose 1password)
 
 # Helpful github gist for installing zsh_autosuggestions and zsy-syntax-highlighting
 # https://gist.github.com/dogrocker/1efb8fd9427779c827058f873b94df95
