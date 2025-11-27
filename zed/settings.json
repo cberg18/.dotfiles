@@ -13,7 +13,6 @@
       "provider": "ollama",
       "model": "gemma3:12b"
     },
-    "version": "2"
   },
   "ssh_connections": [
     {
@@ -54,7 +53,7 @@
   "theme": {
     "mode": "system",
     "light": "One Light",
-    "dark": "monokai Darker Classic"
+    "dark": "Ayu Dark"
   },
   "show_whitespaces": "boundary",
   "indent_guides": {
