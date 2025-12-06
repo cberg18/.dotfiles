@@ -159,11 +159,10 @@ DISABLE_UNTRACKED_FILES_DIRTY="true"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(thefuck terraform ansible colorize zsh-uv-env git git-prompt python pip alias-finder zsh-autosuggestions zsh-syntax-highlighting docker docker-compose 1password)
+plugins=(thefuck terraform ansible colorize zsh-uv-env git git-prompt python pip alias-finder zsh-syntax-highlighting docker docker-compose 1password)
 
-# Helpful github gist for installing zsh_autosuggestions and zsy-syntax-highlighting
+# Helpful github gist for installing zsh-syntax-highlighting
 # https://gist.github.com/dogrocker/1efb8fd9427779c827058f873b94df95
-# git clone https://github.com/zsh-users/zsh-autosuggestions.git $ZSH_CUSTOM/plugins/zsh-autosuggestions
 # git clone https://github.com/zsh-users/zsh-syntax-highlighting.git $ZSH_CUSTOM/plugins/zsh-syntax-highlighting
 # git clone git@github.com:scopatz/nanorc.git ~/.dotfiles/.nano/nanorc
 
@@ -196,12 +195,16 @@ fi
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
 alias cp="cp -v"
+alias clabops="cd ~/Documents/code/labOps"
+alias cstockbot="cd ~/Documents/code/StockBot"
+alias cdotfiles="cd ~/.dotfiles"
+alias cconfigs="cd /mnt/configs"
 alias lls="ls -la"
-alias stockbot="code ~/Documents/code/StockBot && ~/Documents/code/StockBot"
-alias labOps="code ~/Documents/code/labOps && ~/Documents/code/labOps"
+alias stockbot="code ~/Documents/code/StockBot && cd ~/Documents/code/StockBot"
+alias labOps="code ~/Documents/code/labOps && cd ~/Documents/code/labOps"
 alias configs="code /mnt/configs && cd /mnt/configs"
-alias zstockbot="zed ~/Documents/code/StockBot && ~/Documents/code/StockBot"
-alias zlabOps="zed ~/Documents/code/labOps && ~/Documents/code/labOps"
+alias zstockbot="zed ~/Documents/code/StockBot && cd ~/Documents/code/StockBot"
+alias zlabOps="zed ~/Documents/code/labOps && cd ~/Documents/code/labOps"
 alias zconfigs="zed /mnt/configs && cd /mnt/configs"
 alias zdotfiles="zed ~/.dotfiles && cd ~/.dotfiles"
 
@@ -243,10 +246,6 @@ ln -sf ~/.dotfiles/custom/* $ZSH_CUSTOM/themes
 nano_syntax_highlighting() {
   git clone https://github.com/scopatz/nanorc.git $HOME/.dotfiles/.nano
   ln -sv $HOME/.dotfiles/.nano $HOME/.nano
-}
-
-zsh_autosuggestions() {
-  git clone https://github.com/zsh-users/zsh-autosuggestions.git $ZSH_CUSTOM/plugins/zsh-autosuggestions
 }
 
 zsh_syntax_highlighting() {
