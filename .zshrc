@@ -159,9 +159,9 @@ DISABLE_UNTRACKED_FILES_DIRTY="true"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(thefuck terraform ansible colorize zsh-uv-env git git-prompt python pip alias-finder zsh-syntax-highlighting docker docker-compose 1password)
-
-# Helpful github gist for installing zsh-syntax-highlighting
+plugins=(thefuck terraform ansible colorize zsh-uv-env git git-prompt python pip alias-finder zsh-autosuggestions zsh-syntax-highlighting docker docker-compose 1password)
+# Helpful github gist for installing zsh_autosuggestions and zsy-syntax-highlighting
+# git clone https://github.com/zsh-users/zsh-autosuggestions.git $ZSH_CUSTOM/plugins/zsh-autosuggestions
 # https://gist.github.com/dogrocker/1efb8fd9427779c827058f873b94df95
 # git clone https://github.com/zsh-users/zsh-syntax-highlighting.git $ZSH_CUSTOM/plugins/zsh-syntax-highlighting
 # git clone git@github.com:scopatz/nanorc.git ~/.dotfiles/.nano/nanorc
@@ -246,6 +246,10 @@ ln -sf ~/.dotfiles/custom/* $ZSH_CUSTOM/themes
 nano_syntax_highlighting() {
   git clone https://github.com/scopatz/nanorc.git $HOME/.dotfiles/.nano
   ln -sv $HOME/.dotfiles/.nano $HOME/.nano
+}
+
+zsh_autosuggestions() {
+  git clone https://github.com/zsh-users/zsh-autosuggestions.git $ZSH_CUSTOM/plugins/zsh-autosuggestions
 }
 
 zsh_syntax_highlighting() {
