@@ -30,7 +30,8 @@ fi
 export PATH="$HOME/.local/bin:$PATH"
 export ZSH="$HOME/.oh-my-zsh"
 export RPS1C=034
-export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=green,bg=bold"
+#export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=green,bg=bold,underline"
+export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#008080,bg=#808000,bold,underline"
 bindkey '^[[1;5D' backward-word
 bindkey '^[[1;5C' forward-word
 
@@ -199,7 +200,7 @@ alias clabops="cd ~/Documents/code/labOps"
 alias cstockbot="cd ~/Documents/code/StockBot"
 alias cdotfiles="cd ~/.dotfiles"
 alias cconfigs="cd /mnt/configs"
-alias lls="ls -la"
+alias ls="ls -la"
 alias stockbot="code ~/Documents/code/StockBot && cd ~/Documents/code/StockBot"
 alias labOps="code ~/Documents/code/labOps && cd ~/Documents/code/labOps"
 alias configs="code /mnt/configs && cd /mnt/configs"
@@ -209,6 +210,8 @@ alias zconfigs="zed /mnt/configs && cd /mnt/configs"
 alias zdotfiles="zed ~/.dotfiles && cd ~/.dotfiles"
 
 export PYTHONSTARTUP=$HOME/.pythonrc
+
+[[ -s "/etc/grc.zsh" ]] && source /etc/grc.zsh
 
 #print a cool tree
 CBONSAI=$(which cbonsai)
@@ -229,14 +232,6 @@ if ! test -h ~/.pythonrc ; then
   ln -sv ~/.dotfiles/.pythonrc ~/.pythonrc
 fi
 
-if ! test -h ~/.nanrc ; then
-  ln -sv ~/.dotfiles/.nanrc ~/.nanrc
-fi
-
-if ! test -h ~/.nano ; then
-  ln -sv ~/.dotfiles/.nano ~/.nano
-fi
-
 if test -d ~/.config/zed && ! test -L ~/.config/zed/settings.json ; then
   ln -sv ~/.dotfiles/zed/settings.json ~/.config/zed/settings.json > /dev/null
 fi
@@ -244,8 +239,7 @@ fi
 ln -sf ~/.dotfiles/custom/* $ZSH_CUSTOM/themes
 
 nano_syntax_highlighting() {
-  git clone https://github.com/scopatz/nanorc.git $HOME/.dotfiles/.nano
-  ln -sv $HOME/.dotfiles/.nano $HOME/.nano
+  curl https://raw.githubusercontent.com/scopatz/nanorc/master/install.sh | sh
 }
 
 zsh_autosuggestions() {
