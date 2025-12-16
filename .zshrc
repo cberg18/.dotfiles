@@ -9,11 +9,8 @@ if [ $# -eq 0 ]; then
     REMOTE=$(git --git-dir=$HOME/.dotfiles/.git --work-tree=$HOME/.dotfiles rev-parse "$UPSTREAM")
     if [ ! -d $HOME/.dotfiles/.git ]; then
         git clone https://github.com/cberg18/.dotfiles.git ~/.dotfiles
-    elif [ -f $HOME/.dotfiles/.resume ]; then
-        rm ~/.dotfiles/.resume
     elif [ $LOCAL != $REMOTE ]; then
         echo "Update available..."
-        touch ~/.dotfiles/.resume
         git --git-dir=$HOME/.dotfiles/.git --work-tree=$HOME/.dotfiles reset -q --hard
         git --git-dir=$HOME/.dotfiles/.git --work-tree=$HOME/.dotfiles pull
         source ~/.zshrc update
