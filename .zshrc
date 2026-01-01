@@ -3,6 +3,7 @@
 # Path to your oh-my-zsh installation.
 
 if [ $# -eq 0 ]; then
+    echo "[] checking for updates..."
     git --git-dir=$HOME/.dotfiles/.git --work-tree=$HOME/.dotfiles fetch
     UPSTREAM=${1:-'@{u}'}
     LOCAL=$(git --git-dir=$HOME/.dotfiles/.git --work-tree=$HOME/.dotfiles rev-parse @)
@@ -10,18 +11,18 @@ if [ $# -eq 0 ]; then
     if [ ! -d $HOME/.dotfiles/.git ]; then
         git clone https://github.com/cberg18/.dotfiles.git ~/.dotfiles
     elif [ $LOCAL != $REMOTE ]; then
-        echo "Update available..."
+        echo "[] Update available..."
         git --git-dir=$HOME/.dotfiles/.git --work-tree=$HOME/.dotfiles reset -q --hard
         git --git-dir=$HOME/.dotfiles/.git --work-tree=$HOME/.dotfiles pull
         source ~/.zshrc update
         return
     else [ $LOCAL = $REMOTE ]
-        echo ".dotfiles are up to date"
+        echo "[].dotfiles are up to date"
     fi
 elif [ $1 = "update" ]; then
-    echo "updated successfully"
+    echo "[] updated successfully"
 else
-    echo "somethings weird"
+    echo "[✖] somethings weird"
 fi
 
 export PATH="$HOME/.local/bin:$PATH"
@@ -95,7 +96,7 @@ esac
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
 #ZSH_THEME="af-magic"
 if [[ $isVSCode ]]; then
-  echo "setting vscode theme"
+  echo "[] setting vscode theme"
   ZSH_THEME="af-magic"
 else
   ZSH_THEME="frontcube" # this theme is broken in vscode terminal
@@ -238,18 +239,18 @@ fi
 # Create symlinks for Zed configuration files
 if test -d ~/.config/zed ; then # extra test to only make link where needed
     if  ! test -L ~/.config/zed/settings.json; then
-        echo "Creating symlink for ~/.config/zed/settings.json"
+        echo "[] Creating symlink for ~/.config/zed/settings.json"
         ln -sv ~/.dotfiles/zed/settings.json ~/.config/zed/settings.json &> /dev/null
     fi
     if ! test -L ~/.config/zed/keybindings.json; then
-        echo "Creating symlink for ~/.config/zed/keybindings.json"
+        echo "[] Creating symlink for ~/.config/zed/keybindings.json"
         ln -sv ~/.dotfiles/zed/keybindings.json ~/.config/zed/keybindings.json &> /dev/null
     fi
 fi
 
 # link in custom themes and plugins
 ln -sf ~/.dotfiles/custom/themes/* $ZSH_CUSTOM/themes
-ln -sf ~/.dotfiles/custom/plugins/* $ZSH_CUSTOM/plugins
+#ln -sf ~/.dotfiles/custom/plugins/* $ZSH_CUSTOM/plugins
 
 nano_syntax_highlighting() {
   curl https://raw.githubusercontent.com/scopatz/nanorc/master/install.sh | sh
