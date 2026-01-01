@@ -14,6 +14,7 @@ if [ $# -eq 0 ]; then
         git --git-dir=$HOME/.dotfiles/.git --work-tree=$HOME/.dotfiles reset -q --hard
         git --git-dir=$HOME/.dotfiles/.git --work-tree=$HOME/.dotfiles pull
         source ~/.zshrc update
+        return
     else [ $LOCAL = $REMOTE ]
         echo ".dotfiles are up to date"
     fi
@@ -28,6 +29,8 @@ export ZSH="$HOME/.oh-my-zsh"
 export RPS1C=034
 export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=green,bg=bold,underline"
 #export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#008080,bg=#808000,bold,underline"
+
+# key bindings for terminal navigation
 bindkey '^[[1;5D' backward-word
 bindkey '^[[1;5C' forward-word
 
@@ -207,6 +210,7 @@ alias zdotfiles="zed ~/.dotfiles && cd ~/.dotfiles"
 
 export PYTHONSTARTUP=$HOME/.pythonrc
 
+# source grc colorful commands
 [[ -s "/etc/grc.zsh" ]] && source /etc/grc.zsh
 
 #print a cool tree
@@ -218,21 +222,34 @@ OP=$(which op)
 [ -f $OP ] && eval "$(op completion zsh)"
 compdef _op op
 
+# source 1password plugins
 [ -f /home/cberg18/.config/op/plugins.sh ] && source /home/cberg18/.config/op/plugins.sh
 
-if ! test -h ~/.zshrc ; then
+# link to zshrc
+if ! test -L ~/.zshrc ; then
   ln -sv ~/.dotfiles/.zshrc ~/.zshrc
 fi
 
-if ! test -h ~/.pythonrc ; then
+# link to zshrc
+if ! test -L ~/.pythonrc ; then
   ln -sv ~/.dotfiles/.pythonrc ~/.pythonrc
 fi
 
-if test -d ~/.config/zed && ! test -L ~/.config/zed/settings.json ; then
-  ln -sv ~/.dotfiles/zed/settings.json ~/.config/zed/settings.json > /dev/null
+# Create symlinks for Zed configuration files
+if test -d ~/.config/zed ; then # extra test to only make link where needed
+    if  ! test -L ~/.config/zed/settings.json; then
+        echo "Creating symlink for ~/.config/zed/settings.json"
+        ln -sv ~/.dotfiles/zed/settings.json ~/.config/zed/settings.json &> /dev/null
+    fi
+    if ! test -L ~/.config/zed/keybindings.json; then
+        echo "Creating symlink for ~/.config/zed/keybindings.json"
+        ln -sv ~/.dotfiles/zed/keybindings.json ~/.config/zed/keybindings.json &> /dev/null
+    fi
 fi
 
-ln -sf ~/.dotfiles/custom/* $ZSH_CUSTOM/themes
+# link in custom themes and plugins
+ln -sf ~/.dotfiles/custom/themes/* $ZSH_CUSTOM/themes
+ln -sf ~/.dotfiles/custom/plugins/* $ZSH_CUSTOM/plugins
 
 nano_syntax_highlighting() {
   curl https://raw.githubusercontent.com/scopatz/nanorc/master/install.sh | sh
