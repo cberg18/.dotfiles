@@ -12,30 +12,30 @@
     "model_parameters": [],
     "default_model": {
       "provider": "google",
-      "model": "gemini-3-pro-preview"
-    }
+      "model": "gemini-3-pro-preview",
+    },
   },
   "ssh_connections": [
     {
       "host": "desktop",
       "projects": [
         {
-          "paths": ["/home/cberg18/Documents/code/role-docker-tls"]
+          "paths": ["/home/cberg18/Documents/code/role-docker-tls"],
         },
         {
-          "paths": ["~/Documents"]
+          "paths": ["~/Documents"],
         },
         {
-          "paths": ["~/Documents/code/StockBot"]
+          "paths": ["~/Documents/code/StockBot"],
         },
         {
-          "paths": ["~/Documents/code/labOps"]
-        }
-      ]
-    }
+          "paths": ["~/Documents/code/labOps"],
+        },
+      ],
+    },
   ],
   "features": {
-    "edit_prediction_provider": "zed"
+    "edit_prediction_provider": "zed",
   },
   "terminal": {
     "detect_venv": {
@@ -45,16 +45,16 @@
         // in your project's settings, rather than globally.
         "directories": [".env", "env", ".venv", "venv"],
         // Can also be `csh`, `fish`, and `nushell`
-        "activate_script": "default"
-      }
-    }
+        "activate_script": "default",
+      },
+    },
   },
   "ui_font_size": 16,
   "buffer_font_size": 16,
   "theme": {
     "mode": "system",
     "light": "One Light",
-    "dark": "Ayu Dark"
+    "dark": "Ayu Dark",
   },
   "show_whitespaces": "boundary",
   "indent_guides": {
@@ -76,7 +76,7 @@
     ///
     // 1. "disabled"
     // 2. "indent_aware"
-    "background_coloring": "disabled"
+    "background_coloring": "disabled",
   },
   "file_types": {
     "Ansible": [
@@ -95,8 +95,8 @@
       "**/playbooks/*.yaml",
       "**/playbooks/*.yml",
       "**playbook*.yaml",
-      "**playbook*.yml"
-    ]
+      "**playbook*.yml",
+    ],
   },
   "lsp": {
     "ansible-language-server": {
@@ -104,22 +104,22 @@
         // Note: the Zed Ansible extension prefixes all settings with the `ansible` key to provide for a cleaner config under here.
         // So instead of using `ansible.ansible.path` use `ansible.path`and so on.
         "ansible": {
-          "path": "ansible"
+          "path": "ansible",
         },
         "executionEnvironment": {
-          "enabled": false
+          "enabled": false,
         },
         "python": {
-          "interpreterPath": "python3"
+          "interpreterPath": "python3",
         },
         "validation": {
-          "enabled": false, //disable validation
+          "enabled": true, //disable validation
           "lint": {
-            "enabled": false, //disable ansible-lint
-            "path": "ansible-lint"
-          }
-        }
-      }
-    }
-  }
+            "enabled": true, //disable ansible-lint
+            "path": "ansible-lint",
+          },
+        },
+      },
+    },
+  },
 }
