@@ -214,6 +214,9 @@ export PYTHONSTARTUP=$HOME/.pythonrc
 # source grc colorful commands
 [[ -s "/etc/grc.zsh" ]] && source /etc/grc.zsh
 
+# source flux completions
+command -v flux >/dev/null && . <(flux completion zsh)
+
 #print a cool tree
 CBONSAI=$(which cbonsai)
 [ -f $CBONSAI ] && cbonsai -p
