@@ -217,17 +217,22 @@ export PYTHONSTARTUP=$HOME/.pythonrc
 # source flux completions
 command -v flux >/dev/null && . <(flux completion zsh)
 
-#print a cool tree
-CBONSAI=$(which cbonsai)
-[ -f $CBONSAI ] && cbonsai -p
-
-# add autocompletion for 1password
-OP=$(which op)
-[ -f $OP ] && eval "$(op completion zsh)"
-compdef _op op
-
 # source 1password plugins
 [ -f /home/cberg18/.config/op/plugins.sh ] && source /home/cberg18/.config/op/plugins.sh
+
+# add autocompletion for 1password
+if command -v op >/dev/null 2>&1; then
+    echo "[] getting op completions"
+    eval "$(op completion zsh)"
+    compdef _op op
+fi
+
+# generate uv completions
+if command -v uv >/dev/null 2>&1; then
+    echo "[] getting uv completions"
+    eval "$(uv generate-shell-completion zsh)"
+    eval "$(uvx --generate-shell-completion zsh)"
+fi
 
 # link to zshrc
 if ! test -L ~/.zshrc ; then
@@ -255,14 +260,25 @@ fi
 ln -sf ~/.dotfiles/custom/themes/* $ZSH_CUSTOM/themes
 #ln -sf ~/.dotfiles/custom/plugins/* $ZSH_CUSTOM/plugins
 
-nano_syntax_highlighting() {
-  curl https://raw.githubusercontent.com/scopatz/nanorc/master/install.sh | sh
-}
+# if no nano syntax highlighting, get it
+if [[ ! -d $HOME/.nano ]]; then
+    echo "[] getting nano highlighting config"
+    curl https://raw.githubusercontent.com/scopatz/nanorc/master/install.sh | sh
+fi
 
-zsh_autosuggestions() {
-  git clone https://github.com/zsh-users/zsh-autosuggestions.git $ZSH_CUSTOM/plugins/zsh-autosuggestions
-}
+# if no zsh-autosuggestions, get it
+if [[ ! -d $ZSH_CUSTOM/plugins/zsh-autosuggestions ]]; then
+    echo "[] getting zsh-autosuggestions"
+    git clone https://github.com/zsh-users/zsh-autosuggestions.git $ZSH_CUSTOM/plugins/zsh-autosuggestions
+fi
 
-zsh_syntax_highlighting() {
-  git clone https://github.com/zsh-users/zsh-syntax-highlighting.git $ZSH_CUSTOM/plugins/zsh-syntax-highlighting
-}
+# if no zsh-syntax-highlighting, get it
+if [[ ! -d $ZSH_CUSTOM/plugins/zsh-syntax-highlighting ]]; then
+    echo "[] getting zsh-syntax-highlighting"
+    git clone https://github.com/zsh-users/zsh-syntax-highlighting.git $ZSH_CUSTOM/plugins/zsh-syntax-highlighting
+fi
+
+#print a cool tree
+if command -v cbonsai >/dev/null 2>&1; then
+    cbonsai -p -m $HOST
+fi
