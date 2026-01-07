@@ -2,7 +2,7 @@
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 # Path to your oh-my-zsh installation.
 
-if [ $1 = "update" ]; then
+if [[ $1 = "update" ]]; then
     echo "[] updated successfully"
 elif [ $# -eq 0 ]; then
     echo "[] checking for updates..."
