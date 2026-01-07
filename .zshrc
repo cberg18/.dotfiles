@@ -2,7 +2,9 @@
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 # Path to your oh-my-zsh installation.
 
-if [ $# -eq 0 ]; then
+if [ $1 = "update" ]; then
+    echo "[] updated successfully"
+elif [ $# -eq 0 ]; then
     echo "[] checking for updates..."
     git --git-dir=$HOME/.dotfiles/.git --work-tree=$HOME/.dotfiles fetch
     UPSTREAM=${1:-'@{u}'}
@@ -19,8 +21,6 @@ if [ $# -eq 0 ]; then
     else [ $LOCAL = $REMOTE ]
         echo "[].dotfiles are up to date"
     fi
-elif [ $1 = "update" ]; then
-    echo "[] updated successfully"
 else
     echo "[✖] somethings weird"
 fi
