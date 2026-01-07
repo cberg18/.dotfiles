@@ -262,6 +262,7 @@ ln -sf ~/.dotfiles/custom/themes/* $ZSH_CUSTOM/themes
 
 # if no nano syntax highlighting, get it
 if [[ ! -d $HOME/.nano ]]; then
+    rm -rf $HOME/.nano
     echo "[] getting nano highlighting config"
     curl https://raw.githubusercontent.com/scopatz/nanorc/master/install.sh | sh
 fi
