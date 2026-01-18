@@ -1,6 +1,8 @@
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 # Path to your oh-my-zsh installation.
+#
+export DOTFILES_REMOTE="https://github.com/cberg18/.dotfiles.git"
 
 if [[ $1 = "update" ]]; then
     echo "[] updated successfully"
@@ -11,7 +13,7 @@ elif [ $# -eq 0 ]; then
     LOCAL=$(git --git-dir=$HOME/.dotfiles/.git --work-tree=$HOME/.dotfiles rev-parse @)
     REMOTE=$(git --git-dir=$HOME/.dotfiles/.git --work-tree=$HOME/.dotfiles rev-parse "$UPSTREAM")
     if [ ! -d $HOME/.dotfiles/.git ]; then
-        git clone https://github.com/cberg18/.dotfiles.git ~/.dotfiles
+        git clone $DOTFILES_REMOTE ~/.dotfiles
     elif [ $LOCAL != $REMOTE ]; then
         echo "[] Update available..."
         git --git-dir=$HOME/.dotfiles/.git --work-tree=$HOME/.dotfiles reset -q --hard
@@ -211,37 +213,13 @@ alias zdotfiles="zed ~/.dotfiles && cd ~/.dotfiles"
 
 export PYTHONSTARTUP=$HOME/.pythonrc
 
-# source grc colorful commands
-[[ -s "/etc/grc.zsh" ]] && source /etc/grc.zsh
-
-# source flux completions
-command -v flux >/dev/null && . <(flux completion zsh)
-
-# source 1password plugins
-[ -f /home/cberg18/.config/op/plugins.sh ] && source /home/cberg18/.config/op/plugins.sh
-
-# add autocompletion for 1password
-if command -v op >/dev/null 2>&1; then
-    echo "[] getting op completions"
-    eval "$(op completion zsh)"
-    compdef _op op
-fi
-
-# generate uv completions
-if command -v uv >/dev/null 2>&1; then
-    echo "[] getting uv completions"
-    eval "$(uv generate-shell-completion zsh)"
-    eval "$(uvx --generate-shell-completion zsh)"
-fi
+################################################
+# custom stuff
+################################################
 
 # link to zshrc
 if ! test -L ~/.zshrc ; then
   ln -sv ~/.dotfiles/.zshrc ~/.zshrc
-fi
-
-# link to zshrc
-if ! test -L ~/.pythonrc ; then
-  ln -sv ~/.dotfiles/.pythonrc ~/.pythonrc
 fi
 
 # Create symlinks for Zed configuration files
@@ -256,30 +234,92 @@ if test -d ~/.config/zed ; then # extra test to only make link where needed
     fi
 fi
 
-# link in custom themes and plugins
-ln -sf ~/.dotfiles/custom/themes/* $ZSH_CUSTOM/themes
-#ln -sf ~/.dotfiles/custom/plugins/* $ZSH_CUSTOM/plugins
+# link in themes and plugins
+echo "[] linking custom themes and plugins"
+ln -sf ~/.dotfiles/custom/themes/* $ZSH_CUSTOM/themes > /dev/null
+ln -sf ~/.dotfiles/custom/*.zsh $ZSH_CUSTOM/ > /dev/null
+
+echo "[] making any shell scripts available on path"
+ln -sfn ~/.dotfiles/*.sh $HOME/.local/bin > /dev/null
+
+################################################
+# plugins
+################################################
+
+# output highlighting from grc
+if [[ -s "/etc/grc.zsh" ]]; then
+   source /etc/grc.zsh
+fi
 
 # if no nano syntax highlighting, get it
 if [[ ! -d $HOME/.nano ]]; then
-    rm -rf $HOME/.nano
     echo "[] getting nano highlighting config"
     curl https://raw.githubusercontent.com/scopatz/nanorc/master/install.sh | sh
 fi
 
+if [[ ! -d $ZSH_CUSTOM/plugins/git-prompt ]]; then
+    echo "[] cloning git-prompt plugin"
+    mkdir -p $ZSH_CUSTOM/plugins/git-prompt
+    git clone --depth=1 https://github.com/woefe/git-prompt.zsh $ZSH_CUSTOM/plugins/git-prompt
+fi
+source $ZSH_CUSTOM/plugins/git-prompt/git-prompt.zsh
+
 # if no zsh-autosuggestions, get it
 if [[ ! -d $ZSH_CUSTOM/plugins/zsh-autosuggestions ]]; then
-    echo "[] getting zsh-autosuggestions"
+    echo "[] getting auto-suggestions"
     git clone https://github.com/zsh-users/zsh-autosuggestions.git $ZSH_CUSTOM/plugins/zsh-autosuggestions
 fi
 
 # if no zsh-syntax-highlighting, get it
 if [[ ! -d $ZSH_CUSTOM/plugins/zsh-syntax-highlighting ]]; then
-    echo "[] getting zsh-syntax-highlighting"
+    echo "[] getting syntax highlighting"
     git clone https://github.com/zsh-users/zsh-syntax-highlighting.git $ZSH_CUSTOM/plugins/zsh-syntax-highlighting
 fi
+
+# if no uv, get it
+if [[ ! -d $ZSH_CUSTOM/plugins/uv ]]; then
+    echo "[] getting uv"
+    git clone https://git.safranil.fr/zsh/ohmyzsh.git $ZSH_CUSTOM/plugins/uv
+fi
+
+################################################
+# completions
+################################################
+
+# source flux completions
+if command -v flux >/dev/null; then
+  . <(flux completion zsh)
+fi
+
+# generate uv completions
+if command -v uv >/dev/null 2>&1; then
+    echo "[] getting uv completions"
+    eval "$(uv generate-shell-completion zsh)"
+    eval "$(uvx --generate-shell-completion zsh)"
+fi
+
+# completeions for vault
+if command -v vault > /dev/null 2>&1; then
+    echo "[] getting vault completions"
+    autoload -U +X bashcompinit && bashcompinit
+    complete -o nospace -C /usr/bin/vault vault
+fi
+
+# source 1password plugins
+if [[ -f /home/cberg18/.config/op/plugins.sh ]]; then
+    source /home/cberg18/.config/op/plugins.sh
+fi
+
+# add autocompletion for 1password
+if command -v op >/dev/null 2>&1; then
+    echo "[] getting op completions"
+    eval "$(op completion zsh)"
+    compdef _op op
+fi
+
 
 #print a cool tree
 if command -v cbonsai >/dev/null 2>&1; then
     cbonsai -p -m $HOST
 fi
+. "/home/cberg18/.deno/env"
