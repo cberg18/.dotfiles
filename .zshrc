@@ -317,9 +317,7 @@ if command -v op >/dev/null 2>&1; then
     compdef _op op
 fi
 
-
 #print a cool tree
 if command -v cbonsai >/dev/null 2>&1; then
     cbonsai -p -m $HOST
 fi
-. "/home/cberg18/.deno/env"
