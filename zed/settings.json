@@ -7,6 +7,9 @@
 // custom settings, run the `open default settings` command
 // from the command palette or from `Zed` application menu.
 {
+  "edit_predictions": {
+    "provider": "zed",
+  },
   "buffer_font_family": "MesloLGS NF",
   "colorize_brackets": true,
   "agent": {
@@ -35,9 +38,6 @@
       ],
     },
   ],
-  "features": {
-    "edit_prediction_provider": "zed",
-  },
   "terminal": {
     "detect_venv": {
       "on": {
@@ -55,7 +55,7 @@
   "theme": {
     "mode": "system",
     "light": "One Light",
-    "dark": "Ayu Dark",
+    "dark": "DevStreetLab Dark",
   },
   "show_whitespaces": "boundary",
   "indent_guides": {
@@ -101,7 +101,7 @@
     ],
   },
   "lsp": {
-    "ansible-language-server": {
+    "ansible": {
       "settings": {
         // Note: the Zed Ansible extension prefixes all settings with the `ansible` key to provide for a cleaner config under here.
         // So instead of using `ansible.ansible.path` use `ansible.path`and so on.
