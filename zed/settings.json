@@ -7,16 +7,19 @@
 // custom settings, run the `open default settings` command
 // from the command palette or from `Zed` application menu.
 {
+  "git_panel": {
+    "tree_view": true,
+  },
   "edit_predictions": {
     "provider": "zed",
   },
-  "buffer_font_family": "MesloLGS NF",
+  "buffer_font_family": "MesloLGS Nerd Font Mono",
   "colorize_brackets": true,
   "agent": {
     "model_parameters": [],
     "default_model": {
-      "provider": "ollama",
-      "model": "qwen2.5-coder:7b",
+      "provider": "google",
+      "model": "gemini-3-pro-preview",
     },
   },
   "ssh_connections": [
@@ -51,12 +54,13 @@
     },
   },
   "ui_font_size": 16,
-  "buffer_font_size": 16,
+  "buffer_font_size": 14.0,
   "theme": {
     "mode": "system",
     "light": "One Light",
     "dark": "DevStreetLab Dark",
   },
+  "semantic_tokens": "combined",
   "show_whitespaces": "boundary",
   "indent_guides": {
     // Whether to show indent guides in the editor.
@@ -81,6 +85,7 @@
   },
   "file_types": {
     "Shell Script": [".zshrc"],
+    "JSON": [".renovaterc", "*.tfstate", "*.tfstate.backup"],
     "Ansible": [
       "**.ansible.yml",
       "**.ansible.yaml",
@@ -121,6 +126,16 @@
             "path": "ansible-lint",
           },
         },
+      },
+    },
+  },
+  "languages": {
+    "Python": {
+      "inlay_hints": {
+        "enabled": true,
+        "show_type_hints": true,
+        "show_parameter_hints": true,
+        "show_other_hints": true,
       },
     },
   },
