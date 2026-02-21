@@ -232,7 +232,7 @@ if test -d ~/.config/zed ; then # extra test to only make link where needed
         echo "[] Creating symlink for ~/.config/zed/keybindings.json"
         ln -sv ~/.dotfiles/zed/keybindings.json ~/.config/zed/keybindings.json &> /dev/null
     fi
-    ln -sv ~/.dotfiles/zed/themes ~/.config/zed
+    ln -sv ~/.dotfiles/zed/themes/* ~/.config/zed/themes/
 fi
 
 # link in themes and plugins
