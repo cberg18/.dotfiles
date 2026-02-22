@@ -147,6 +147,12 @@
       "format_on_save": "on",
     },
     "Python": {
+      "language_servers": [
+        // Disable basedpyright and enable ty, and otherwise
+        // use the default configuration.
+        "ty",
+        "!basedpyright",
+      ],
       "inlay_hints": {
         "enabled": true,
         "show_type_hints": true,
