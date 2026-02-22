@@ -7,6 +7,7 @@
 // custom settings, run the `open default settings` command
 // from the command palette or from `Zed` application menu.
 {
+  "enable_language_server": true,
   "git_panel": {
     "tree_view": true,
   },
@@ -84,6 +85,15 @@
     "background_coloring": "disabled",
   },
   "file_types": {
+    "Dockerfile": ["Dockerfile.*"],
+    "docker-compose": [
+      "docker-compose.yml",
+      "*.docker-compose.yml",
+      "compose.yml",
+      "docker-compose.yaml",
+      "*.docker-compose.yaml",
+      "compose.yaml",
+    ],
     "Shell Script": [".zshrc"],
     "JSON": [".renovaterc", "*.tfstate", "*.tfstate.backup"],
     "Ansible": [
@@ -130,6 +140,12 @@
     },
   },
   "languages": {
+    "YAML": {
+      "language_servers": ["yaml-language_servers", "!docker-compose"],
+    },
+    "Dockerfile": {
+      "format_on_save": "on",
+    },
     "Python": {
       "inlay_hints": {
         "enabled": true,
