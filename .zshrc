@@ -318,6 +318,12 @@ if command -v op >/dev/null 2>&1; then
     compdef _op op
 fi
 
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/home/cberg18/google-cloud-sdk/path.zsh.inc' ]; then . '/home/cberg18/google-cloud-sdk/path.zsh.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/home/cberg18/google-cloud-sdk/completion.zsh.inc' ]; then . '/home/cberg18/google-cloud-sdk/completion.zsh.inc'; fi
+
 #print a cool tree
 if command -v cbonsai >/dev/null 2>&1; then
     cbonsai -p -m $HOST
