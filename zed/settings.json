@@ -151,8 +151,18 @@
         // Disable basedpyright and enable ty, and otherwise
         // use the default configuration.
         "ty",
+        "ruff",
         "!basedpyright",
       ],
+      "code_actions_on_format": {
+        "source.organizeImports.ruff": true,
+      },
+      "format_on_save": "on",
+      "formatter": {
+        "language_server": {
+          "name": "ruff",
+        },
+      },
       "inlay_hints": {
         "enabled": true,
         "show_type_hints": true,
