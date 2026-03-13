@@ -7,6 +7,9 @@
 // custom settings, run the `open default settings` command
 // from the command palette or from `Zed` application menu.
 {
+  "project_panel": {
+    "dock": "left",
+  },
   "enable_language_server": true,
   "git_panel": {
     "tree_view": true,
@@ -97,43 +100,56 @@
     "Shell Script": [".zshrc"],
     "JSON": [".renovaterc", "*.tfstate", "*.tfstate.backup"],
     "Ansible": [
-      "**.ansible.yml",
-      "**.ansible.yaml",
-      "**/defaults/*.yml",
-      "**/defaults/*.yaml",
-      "**/meta/*.yml",
-      "**/meta/*.yaml",
-      "**/tasks/*.yml",
-      "**/tasks/*.yaml",
-      "**/handlers/*.yml",
-      "**/handlers/*.yaml",
-      "**/group_vars/*.yml",
-      "**/group_vars/*.yaml",
-      "**/playbooks/*.yaml",
-      "**/playbooks/*.yml",
-      "**playbook*.yaml",
-      "**playbook*.yml",
+      "**/ansible/.ansible.yml",
+      "**/ansible/.ansible.yaml",
+      "**/ansible/defaults/*.yml",
+      "**/ansible/defaults/*.yaml",
+      "**/ansible/meta/*.yml",
+      "**/ansible/meta/*.yaml",
+      "**/ansible/tasks/*.yml",
+      "**/ansible/tasks/*.yaml",
+      "**/ansible/handlers/*.yml",
+      "**/ansible/handlers/*.yaml",
+      "**/ansible/group_vars/*.yml",
+      "**/ansible/group_vars/*.yaml",
+      "**/ansible/playbooks/*.yaml",
+      "**/ansible/playbooks/*.yml",
+      "**/ansible/playbook*.yaml",
+      "**/ansible/playbook*.yml",
+      "**/ansible/*.yml",
+      "**/ansible/*.yaml",
     ],
   },
   "lsp": {
     "ansible": {
       "settings": {
-        // Note: the Zed Ansible extension prefixes all settings with the `ansible` key to provide for a cleaner config under here.
-        // So instead of using `ansible.ansible.path` use `ansible.path`and so on.
         "ansible": {
           "path": "ansible",
         },
         "executionEnvironment": {
-          "enabled": false,
+          "enabled": true,
         },
         "python": {
-          "interpreterPath": "python3",
+          "interpreterPath": ".venv/bin/python3",
         },
         "validation": {
-          "enabled": true, //disable validation
+          "enabled": true,
           "lint": {
-            "enabled": true, //disable ansible-lint
-            "path": "ansible-lint",
+            "enabled": true,
+            "path": ".venv/bin/ansible-lint",
+            "arguments": ["--fix"],
+          },
+        },
+      },
+    },
+    "yaml-language-server": {
+      "settings": {
+        "yaml": {
+          "schemas": {
+            "https://raw.githubusercontent.com/ansible/ansible-lint/main/src/ansiblelint/schemas/inventory.json": [
+              "./inventory/*.yaml",
+              "hosts.yml",
+            ],
           },
         },
       },
