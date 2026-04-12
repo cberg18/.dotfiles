@@ -31,7 +31,10 @@ export PATH="$HOME/.local/bin:$PATH"
 export ZSH="$HOME/.oh-my-zsh"
 export RPS1C=034
 export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=green,bg=bold,underline"
-#export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#008080,bg=#808000,bold,underline"
+
+if [[ $TERM == "xterm-ghostty" ]]; then
+    export TERM="xterm-256color"
+fi
 
 # key bindings for terminal navigation
 bindkey '^[[1;5D' backward-word
@@ -328,3 +331,7 @@ if [ -f '/home/cberg18/google-cloud-sdk/completion.zsh.inc' ]; then . '/home/cbe
 if command -v cbonsai >/dev/null 2>&1; then
     cbonsai -p -m $HOST
 fi
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion

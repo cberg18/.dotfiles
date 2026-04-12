@@ -21,10 +21,23 @@
   "buffer_font_family": "MesloLGS Nerd Font Mono",
   "colorize_brackets": true,
   "agent": {
+    "tool_permissions": {
+      "tools": {
+        "terminal": {
+          "default": "allow",
+          "always_allow": [
+            {
+              "pattern": "^grep\\b"
+            }
+          ]
+        }
+      }
+    },
     "model_parameters": [],
     "default_model": {
+      "enable_thinking": true,
       "provider": "google",
-      "model": "gemini-3-pro-preview",
+      "model": "gemini-3.1-pro-preview",
     },
   },
   "ssh_connections": [
@@ -63,7 +76,7 @@
   "theme": {
     "mode": "system",
     "light": "One Light",
-    "dark": "DevStreetLab Dark",
+    "dark": "Ayu Mirage",
   },
   "semantic_tokens": "combined",
   "show_whitespaces": "boundary",
