@@ -31,7 +31,7 @@ export PATH="$HOME/.local/bin:$PATH"
 export ZSH="$HOME/.oh-my-zsh"
 export RPS1C=034
 export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=green,bg=bold,underline"
-export OP_HOST="cluster2"
+export OP_HOST="op.byteshiftd.dev"
 
 if [[ $TERM == "xterm-ghostty" ]]; then
     export TERM="xterm-256color"
