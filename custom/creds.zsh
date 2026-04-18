@@ -1,7 +1,7 @@
 #!/bin/bash
 
 if nslookup $OP_HOST > /dev/null 2>&1; then
-    source <(age -d -i ~/.ssh/id_ed25519 ./custom/pg_pass.zsh.age) $OP_HOST
+    source <(age -d -i $HOME/.ssh/id_ed25519 $HOME/.dotfiles/custom/pg_pass.zsh.age) $OP_HOST
     echo "[] creds sourced"
 else
     echo "[x] Network or DB not reachable."
