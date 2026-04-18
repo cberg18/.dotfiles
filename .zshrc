@@ -21,7 +21,7 @@ elif [ $# -eq 0 ]; then
         source ~/.zshrc update
         return
     else [ $LOCAL = $REMOTE ]
-        echo "[].dotfiles are up to date"
+        echo "[] .dotfiles are up to date"
     fi
 else
     echo "[✖] somethings weird"
@@ -31,6 +31,7 @@ export PATH="$HOME/.local/bin:$PATH"
 export ZSH="$HOME/.oh-my-zsh"
 export RPS1C=034
 export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=green,bg=bold,underline"
+export OP_HOST="cluster2"
 
 if [[ $TERM == "xterm-ghostty" ]]; then
     export TERM="xterm-256color"
@@ -229,22 +230,22 @@ fi
 if test -d ~/.config/zed ; then # extra test to only make link where needed
     if  ! test -L ~/.config/zed/settings.json; then
         echo "[] Creating symlink for ~/.config/zed/settings.json"
-        ln -sv ~/.dotfiles/zed/settings.json ~/.config/zed/settings.json &> /dev/null
+        ln -sf ~/.dotfiles/zed/settings.json ~/.config/zed/settings.json &> /dev/null
     fi
     if ! test -L ~/.config/zed/keybindings.json; then
         echo "[] Creating symlink for ~/.config/zed/keybindings.json"
-        ln -sv ~/.dotfiles/zed/keybindings.json ~/.config/zed/keybindings.json &> /dev/null
+        ln -sf ~/.dotfiles/zed/keybindings.json ~/.config/zed/keybindings.json &> /dev/null
     fi
-    ln -sv ~/.dotfiles/zed/themes/* ~/.config/zed/themes/
+    ln -sf ~/.dotfiles/zed/themes/* ~/.config/zed/themes/
 fi
 
 # link in themes and plugins
 echo "[] linking custom themes and plugins"
-ln -sf ~/.dotfiles/custom/themes/* $ZSH_CUSTOM/themes > /dev/null
-ln -sf ~/.dotfiles/custom/*.zsh $ZSH_CUSTOM/ > /dev/null
+ln -sf ~/.dotfiles/custom/themes/* $ZSH_CUSTOM/themes &> /dev/null
+ln -sf ~/.dotfiles/custom/*.zsh $ZSH_CUSTOM/ &> /dev/null
 
 echo "[] making any shell scripts available on path"
-ln -sfn ~/.dotfiles/*.sh $HOME/.local/bin > /dev/null
+ln -sfn ~/.dotfiles/*.sh $HOME/.local/bin &> /dev/null
 
 ################################################
 # plugins
