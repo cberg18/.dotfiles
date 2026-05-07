@@ -7,12 +7,20 @@
 // custom settings, run the `open default settings` command
 // from the command palette or from `Zed` application menu.
 {
+  "cli_default_open_behavior": "new_window",
+  "outline_panel": {
+    "dock": "left",
+  },
+  "collaboration_panel": {
+    "dock": "left",
+  },
   "icon_theme": "Bearded Icons",
   "project_panel": {
     "dock": "left",
   },
   "enable_language_server": true,
   "git_panel": {
+    "dock": "left",
     "tree_view": true,
   },
   "edit_predictions": {
@@ -21,17 +29,19 @@
   "buffer_font_family": "MesloLGS Nerd Font Mono",
   "colorize_brackets": true,
   "agent": {
+    "sidebar_side": "right",
+    "dock": "right",
     "tool_permissions": {
       "tools": {
         "terminal": {
           "default": "allow",
           "always_allow": [
             {
-              "pattern": "^grep\\b"
-            }
-          ]
-        }
-      }
+              "pattern": "^grep\\b",
+            },
+          ],
+        },
+      },
     },
     "model_parameters": [],
     "default_model": {
@@ -133,6 +143,7 @@
       "**/ansible/*.yml",
       "**/ansible/*.yaml",
     ],
+    "HCL": ["*.alloy"],
   },
   "lsp": {
     "ansible": {
@@ -159,6 +170,7 @@
     "yaml-language-server": {
       "settings": {
         "yaml": {
+          "keyOrdering": true,
           "schemas": {
             "https://raw.githubusercontent.com/ansible/ansible-lint/main/src/ansiblelint/schemas/inventory.json": [
               "./inventory/*.yaml",
@@ -171,7 +183,7 @@
   },
   "languages": {
     "YAML": {
-      "language_servers": ["yaml-language_servers", "!docker-compose"],
+      "language_servers": ["yaml-language-server", "!docker-compose"],
     },
     "Dockerfile": {
       "format_on_save": "on",
