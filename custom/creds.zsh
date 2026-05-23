@@ -12,8 +12,8 @@ encrypt_secrets() {
     # Configuration
     KEY_PUB="$HOME/.ssh/id_ed25519.pub"
     KEY_PRIV="$HOME/.ssh/id_ed25519"
-    INPUT_FILE="$HOME/.dotfiles/custom/pg_pass.zsh"
-    OUTPUT_FILE="$HOME/.dotfiles/custom/pg_pass.zsh.age"
+    INPUT_FILE="$HOME/.dotfiles/custom/env_pass.zsh"
+    OUTPUT_FILE="$HOME/.dotfiles/custom/env_pass.zsh.age"
 
     # Check for age utility
     if ! command -v age &> /dev/null; then
@@ -56,8 +56,8 @@ encrypt_secrets() {
 decrypt_secrets() {
     # Configuration
     KEY_PRIV="$HOME/.ssh/id_ed25519"
-    INPUT_FILE="$HOME/.dotfiles/custom/pg_pass.zsh.age"
-    OUTPUT_FILE="$HOME/.dotfiles/custom/pg_pass.zsh"
+    INPUT_FILE="$HOME/.dotfiles/custom/env_pass.zsh.age"
+    OUTPUT_FILE="$HOME/.dotfiles/custom/env_pass.zsh"
 
     # Check for age utility
     if ! command -v age &> /dev/null; then
