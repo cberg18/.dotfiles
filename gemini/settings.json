@@ -1,0 +1,17 @@
+{
+  "security": {
+    "auth": {
+      "selectedType": "gemini-api-key"
+    }
+  },
+  "mcpServers": {
+    "grafana": {
+      "command": "uvx",
+      "args": ["mcp-grafana"],
+      "env": {
+        "GRAFANA_URL": "https://grafana.byteshiftd.dev",
+        "GRAFANA_SERVICE_ACCOUNT_TOKEN": "GRAFANA_MCP_TOKEN"
+      }
+    }
+  }
+}
