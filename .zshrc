@@ -7,21 +7,36 @@ export DOTFILES_REMOTE="https://github.com/cberg18/.dotfiles.git"
 if [[ $1 = "update" ]]; then
     echo "[] updated successfully"
 elif [ $# -eq 0 ]; then
-    echo "[] checking for updates..."
-    git --git-dir=$HOME/.dotfiles/.git --work-tree=$HOME/.dotfiles fetch
-    UPSTREAM=${1:-'@{u}'}
-    LOCAL=$(git --git-dir=$HOME/.dotfiles/.git --work-tree=$HOME/.dotfiles rev-parse @)
-    REMOTE=$(git --git-dir=$HOME/.dotfiles/.git --work-tree=$HOME/.dotfiles rev-parse "$UPSTREAM")
     if [ ! -d $HOME/.dotfiles/.git ]; then
+        echo "[] .dotfiles repository not found, cloning..."
         git clone $DOTFILES_REMOTE ~/.dotfiles
-    elif [ $LOCAL != $REMOTE ]; then
-        echo "[] Update available..."
-        git --git-dir=$HOME/.dotfiles/.git --work-tree=$HOME/.dotfiles reset -q --hard
-        git --git-dir=$HOME/.dotfiles/.git --work-tree=$HOME/.dotfiles pull
-        source ~/.zshrc update
-        return
-    else [ $LOCAL = $REMOTE ]
-        echo "[] .dotfiles are up to date"
+    else
+        echo "[] checking for updates..."
+        git --git-dir=$HOME/.dotfiles/.git --work-tree=$HOME/.dotfiles fetch
+        UPSTREAM=${1:-'@{u}'}
+        LOCAL=$(git --git-dir=$HOME/.dotfiles/.git --work-tree=$HOME/.dotfiles rev-parse @)
+        REMOTE=$(git --git-dir=$HOME/.dotfiles/.git --work-tree=$HOME/.dotfiles rev-parse "$UPSTREAM")
+        if [ $LOCAL != $REMOTE ]; then
+            echo "[] Update available..."
+            # Check for local uncommitted changes (staged or unstaged)
+            if ! git --git-dir=$HOME/.dotfiles/.git --work-tree=$HOME/.dotfiles diff --quiet || \
+               ! git --git-dir=$HOME/.dotfiles/.git --work-tree=$HOME/.dotfiles diff --cached --quiet; then
+                echo "[] Warning: Local uncommitted changes detected in .dotfiles. Skipping auto-update to avoid discarding changes."
+            else
+                # Check for local commits that are not upstream
+                _DOTFILES_BASE=$(git --git-dir=$HOME/.dotfiles/.git --work-tree=$HOME/.dotfiles merge-base @ "$UPSTREAM")
+                if [ "$LOCAL" != "$_DOTFILES_BASE" ]; then
+                    echo "[] Warning: Local commits detected in .dotfiles. Skipping auto-update to avoid discarding changes."
+                else
+                    # Safe to fast-forward pull
+                    git --git-dir=$HOME/.dotfiles/.git --work-tree=$HOME/.dotfiles pull --ff-only
+                    source ~/.zshrc update
+                    return
+                fi
+            fi
+        else
+            echo "[] .dotfiles are up to date"
+        fi
     fi
 else
     echo "[✖] somethings weird"
@@ -226,26 +241,51 @@ if ! test -L ~/.zshrc ; then
   ln -sv ~/.dotfiles/.zshrc ~/.zshrc
 fi
 
+# link to agents
+if ! test -L ~/.agents ; then
+  ln -sv ~/.dotfiles/.agents ~/.agents
+fi
+
 # Create symlinks for Zed configuration files
 if test -d ~/.config/zed ; then # extra test to only make link where needed
     if  ! test -L ~/.config/zed/settings.json; then
         echo "[] Creating symlink for ~/.config/zed/settings.json"
         ln -sf ~/.dotfiles/zed/settings.json ~/.config/zed/settings.json &> /dev/null
     fi
-    if ! test -L ~/.config/zed/keybindings.json; then
-        echo "[] Creating symlink for ~/.config/zed/keybindings.json"
-        ln -sf ~/.dotfiles/zed/keybindings.json ~/.config/zed/keybindings.json &> /dev/null
+    if ! test -L ~/.config/zed/keymap.json; then
+        echo "[] Creating symlink for ~/.config/zed/keymap.json"
+        ln -sf ~/.dotfiles/zed/keymap.json ~/.config/zed/keymap.json &> /dev/null
     fi
-    ln -sf ~/.dotfiles/zed/themes/* ~/.config/zed/themes/
+    # Only link themes if the themes directory exists
+    if test -d ~/.dotfiles/zed/themes; then
+        for theme_file in ~/.dotfiles/zed/themes/*; do
+            if ! test -L ~/.config/zed/themes/${theme_file:t}; then
+                ln -sf "$theme_file" ~/.config/zed/themes/${theme_file:t}
+            fi
+        done
+    fi
 fi
 
 # link in themes and plugins
 echo "[] linking custom themes and plugins"
-ln -sf ~/.dotfiles/custom/themes/* $ZSH_CUSTOM/themes &> /dev/null
-ln -sf ~/.dotfiles/custom/*.zsh $ZSH_CUSTOM/ &> /dev/null
+for theme_file in ~/.dotfiles/custom/themes/*; do
+    if ! test -L "$ZSH_CUSTOM/themes/${theme_file:t}"; then
+        ln -sf "$theme_file" "$ZSH_CUSTOM/themes/${theme_file:t}" &> /dev/null
+    fi
+done
+
+for custom_file in ~/.dotfiles/custom/*.zsh; do
+    if ! test -L "$ZSH_CUSTOM/${custom_file:t}"; then
+        ln -sf "$custom_file" "$ZSH_CUSTOM/${custom_file:t}" &> /dev/null
+    fi
+done
 
 echo "[] making any shell scripts available on path"
-ln -sfn ~/.dotfiles/*.sh $HOME/.local/bin &> /dev/null
+for script_file in ~/.dotfiles/*.sh; do
+    if ! test -L "$HOME/.local/bin/${script_file:t}"; then
+        ln -sfn "$script_file" "$HOME/.local/bin/${script_file:t}" &> /dev/null
+    fi
+done
 
 ################################################
 # plugins
@@ -307,7 +347,7 @@ fi
 if command -v vault > /dev/null 2>&1; then
     echo "[] getting vault completions"
     autoload -U +X bashcompinit && bashcompinit
-    complete -o nospace -C /usr/bin/vault vault
+    complete -o nospace -C "$(command -v vault)" vault
 fi
 
 # source 1password plugins
