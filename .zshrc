@@ -216,6 +216,7 @@ fi
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
+alias sudo="sudo "
 alias cp="cp -v"
 alias clabops="cd ~/Documents/code/labOps"
 alias cstockbot="cd ~/Documents/code/StockBot"
