@@ -35,7 +35,11 @@
   "collaboration_panel": {
     "dock": "left",
   },
-  "icon_theme": "Bearded Icons",
+  "icon_theme": {
+    "mode": "dark",
+    "light": "Bearded Icons",
+    "dark": "Bearded Icons",
+  },
   "project_panel": {
     "dock": "left",
   },
@@ -182,7 +186,7 @@
           "enabled": true,
           "lint": {
             "enabled": true,
-            "path": ".venv/bin/ansible-lint",
+            "path": "ansible-lint",
             "arguments": ["--fix"],
           },
         },
@@ -198,6 +202,22 @@
             ],
           },
         },
+      },
+    },
+    "clangd": {
+      "binary": {
+        "arguments": [
+          "--background-index",
+          "--clang-tidy",
+          "--completion-style=detailed",
+          "--header-insertion=never",
+          "--log=info",
+          "--query-driver=**/*xtensa-esp32-elf-g++*,**/*xtensa-esp32-elf-gcc*",
+        ],
+      },
+      "initialization_options": {
+        "compilationDatabasePath": "compile_commands.json",
+        "fallbackFlags": ["-std=c++11"],
       },
     },
   },

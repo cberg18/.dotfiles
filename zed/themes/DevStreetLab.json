@@ -60,7 +60,7 @@
         "editor.subheader.background": "#16161E",
         "editor.active_line.background": "#2F343E",
         "editor.highlighted_line.background": "#2F343E",
-        "editor.line_number": "#4D526B",
+        "editor.line_number": "#D1E0BFFF",
         "editor.active_line_number": "#D8DEE9",
         "editor.hover_line_number": "#D8DEE9",
         "editor.invisible": "#878A98FF",
