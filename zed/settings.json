@@ -7,254 +7,255 @@
 // custom settings, run the `open default settings` command
 // from the command palette or from `Zed` application menu.
 {
-  "tabs": {
-    "file_icons": true,
-    "git_status": true,
-  },
-  "context_servers": {
-    "mcp-server-grafana": {
-      "enabled": true,
-      "remote": false,
-      "command": "uvx",
-      "args": ["mcp-grafana"],
-      "env": {
-        "GRAFANA_URL": "https://grafana.byteshiftd.dev",
-        "GRAFANA_SERVICE_ACCOUNT_TOKEN": "GRAFANA_MCP_TOKEN",
-      },
+    "tabs": {
+        "file_icons": true,
+        "git_status": true
     },
-  },
-  "agent_servers": {
-    "gemini": {
-      "type": "registry",
-    },
-  },
-  "cli_default_open_behavior": "new_window",
-  "outline_panel": {
-    "dock": "left",
-  },
-  "collaboration_panel": {
-    "dock": "left",
-  },
-  "icon_theme": {
-    "mode": "dark",
-    "light": "Bearded Icons",
-    "dark": "Bearded Icons",
-  },
-  "project_panel": {
-    "dock": "left",
-  },
-  "enable_language_server": true,
-  "git_panel": {
-    "dock": "left",
-    "tree_view": true,
-  },
-  "edit_predictions": {
-    "provider": "zed",
-  },
-  "buffer_font_family": "MesloLGS Nerd Font Mono",
-  "colorize_brackets": true,
-  "agent": {
-    "sidebar_side": "right",
-    "dock": "right",
-    "tool_permissions": {
-      "tools": {
-        "terminal": {
-          "default": "allow",
-          "always_allow": [
-            {
-              "pattern": "^grep\\b",
-            },
-          ],
-        },
-      },
-    },
-    "model_parameters": [],
-    "default_model": {
-      "enable_thinking": true,
-      "provider": "google",
-      "model": "gemini-3.1-pro-preview",
-    },
-  },
-  "ssh_connections": [
-    {
-      "host": "desktop",
-      "projects": [
-        {
-          "paths": ["/home/cberg18/Documents/code/role-docker-tls"],
-        },
-        {
-          "paths": ["~/Documents"],
-        },
-        {
-          "paths": ["~/Documents/code/StockBot"],
-        },
-        {
-          "paths": ["~/Documents/code/labOps"],
-        },
-      ],
-    },
-  ],
-  "terminal": {
-    "detect_venv": {
-      "on": {
-        // Default directories to search for virtual environments, relative
-        // to the current working directory. We recommend overriding this
-        // in your project's settings, rather than globally.
-        "directories": [".env", "env", ".venv", "venv"],
-        // Can also be `csh`, `fish`, and `nushell`
-        "activate_script": "default",
-      },
-    },
-  },
-  "ui_font_size": 16,
-  "buffer_font_size": 14.0,
-  "theme": {
-    "mode": "system",
-    "light": "One Light",
-    "dark": "Ayu Mirage",
-  },
-  "semantic_tokens": "combined",
-  "show_whitespaces": "boundary",
-  "indent_guides": {
-    // Whether to show indent guides in the editor.
-    "enabled": true,
-    // The width of the indent guides in pixels, between 1 and 10.
-    "line_width": 1,
-    // The width of the active indent guide in pixels, between 1 and 10.
-    "active_line_width": 3,
-    // Determines how indent guides are colored.
-    // This setting can take the following three values:
-    ///
-    // 1. "disabled"
-    // 2. "fixed"
-    // 3. "indent_aware"
-    "coloring": "indent_aware",
-    // Determines how indent guide backgrounds are colored.
-    // This setting can take the following two values:
-    ///
-    // 1. "disabled"
-    // 2. "indent_aware"
-    "background_coloring": "disabled",
-  },
-  "file_types": {
-    "Dockerfile": ["Dockerfile.*"],
-    "docker-compose": [
-      "docker-compose.yml",
-      "docker-compose.yaml",
-      "*.docker-compose.yml",
-      "*.docker-compose.yaml",
-      "compose.yml",
-      "compose.yaml",
-    ],
-    "Shell Script": [".zshrc"],
-    "JSON": [".renovaterc", "*.tfstate", "*.tfstate.backup"],
-    "Ansible": [
-      "**/ansible/.ansible.yml",
-      "**/ansible/.ansible.yaml",
-      "**/ansible/defaults/*.yml",
-      "**/ansible/defaults/*.yaml",
-      "**/ansible/meta/*.yml",
-      "**/ansible/meta/*.yaml",
-      "**/ansible/tasks/*.yml",
-      "**/ansible/tasks/*.yaml",
-      "**/ansible/handlers/*.yml",
-      "**/ansible/handlers/*.yaml",
-      "**/ansible/group_vars/*.yml",
-      "**/ansible/group_vars/*.yaml",
-      "**/ansible/playbooks/*.yaml",
-      "**/ansible/playbooks/*.yml",
-      "**/ansible/playbook*.yaml",
-      "**/ansible/playbook*.yml",
-      "**/ansible/*.yml",
-      "**/ansible/*.yaml",
-    ],
-    "Alloy": ["*.alloy"],
-  },
-  "lsp": {
-    "ansible": {
-      "settings": {
-        "ansible": {
-          "path": "ansible",
-        },
-        "executionEnvironment": {
-          "enabled": true,
-        },
-        "python": {
-          "interpreterPath": ".venv/bin/python3",
-        },
-        "validation": {
-          "enabled": true,
-          "lint": {
+    "context_servers": {
+        "mcp-server-grafana": {
             "enabled": true,
-            "path": "ansible-lint",
-            "arguments": ["--fix"],
-          },
+            "remote": false,
+            "command": "uvx",
+            "args": ["mcp-grafana"],
+            "env": {
+                "GRAFANA_URL": "https://grafana.byteshiftd.dev",
+                "GRAFANA_SERVICE_ACCOUNT_TOKEN": "GRAFANA_MCP_TOKEN"
+            }
+        }
+    },
+    "agent_servers": {
+        "gemini": {
+            "type": "registry"
+        }
+    },
+    "cli_default_open_behavior": "new_window",
+    "outline_panel": {
+        "dock": "left"
+    },
+    "collaboration_panel": {
+        "dock": "left"
+    },
+    "icon_theme": {
+        "mode": "dark",
+        "light": "Bearded Icons",
+        "dark": "Bearded Icons"
+    },
+    "project_panel": {
+        "dock": "left"
+    },
+    "enable_language_server": true,
+    "git_panel": {
+        "dock": "left",
+        "tree_view": true
+    },
+    "edit_predictions": {
+        "provider": "zed"
+    },
+    "buffer_font_family": "MesloLGS Nerd Font Mono",
+    "colorize_brackets": true,
+    "agent": {
+        "sidebar_side": "right",
+        "dock": "right",
+        "tool_permissions": {
+            "tools": {
+                "terminal": {
+                    "default": "allow",
+                    "always_allow": [
+                        {
+                            "pattern": "^grep\\b"
+                        }
+                    ]
+                }
+            }
         },
-      },
+        "model_parameters": [],
+        "default_model": {
+            "enable_thinking": true,
+            "provider": "google",
+            "model": "gemini-3.1-pro-preview"
+        }
     },
-    "yaml-language-server": {
-      "settings": {
-        "yaml": {
-          "schemas": {
-            "https://raw.githubusercontent.com/ansible/ansible-lint/main/src/ansiblelint/schemas/inventory.json": [
-              "./inventory/*.yaml",
-              "hosts.yml",
-            ],
-          },
-        },
-      },
+    "ssh_connections": [
+        {
+            "host": "desktop",
+            "projects": [
+                {
+                    "paths": ["/home/cberg18/Documents/code/role-docker-tls"]
+                },
+                {
+                    "paths": ["~/Documents"]
+                },
+                {
+                    "paths": ["~/Documents/code/StockBot"]
+                },
+                {
+                    "paths": ["~/Documents/code/labOps"]
+                }
+            ]
+        }
+    ],
+    "terminal": {
+        "detect_venv": {
+            "on": {
+                // Default directories to search for virtual environments, relative
+                // to the current working directory. We recommend overriding this
+                // in your project's settings, rather than globally.
+                "directories": [".env", "env", ".venv", "venv"],
+                // Can also be `csh`, `fish`, and `nushell`
+                "activate_script": "default"
+            }
+        }
     },
-    "clangd": {
-      "binary": {
-        "arguments": [
-          "--background-index",
-          "--clang-tidy",
-          "--completion-style=detailed",
-          "--header-insertion=never",
-          "--log=info",
-          "--query-driver=**/*xtensa-esp32-elf-g++*,**/*xtensa-esp32-elf-gcc*",
-        ],
-      },
-      "initialization_options": {
-        "compilationDatabasePath": "compile_commands.json",
-        "fallbackFlags": ["-std=c++11"],
-      },
+    "ui_font_size": 16,
+    "buffer_font_size": 14.0,
+    "theme": {
+        "mode": "system",
+        "light": "One Light",
+        "dark": "Bearded Theme Monokai Metallian"
     },
-  },
-  "languages": {
-    "Ansible": {
-      "semantic_tokens": "combined",
-    },
-    "YAML": {
-      "language_servers": ["yaml-language-server", "!docker-compose"],
-    },
-    "Dockerfile": {
-      "language_servers": ["dockerfile-language-server"],
-      "format_on_save": "on",
-    },
-    "Python": {
-      "language_servers": [
-        // Disable basedpyright and enable ty, and otherwise
-        // use the default configuration.
-        "ty",
-        "ruff",
-        "!basedpyright",
-      ],
-      "code_actions_on_format": {
-        "source.organizeImports.ruff": true,
-      },
-      "format_on_save": "on",
-      "formatter": {
-        "language_server": {
-          "name": "ruff",
-        },
-      },
-      "inlay_hints": {
+    "semantic_tokens": "combined",
+    "show_whitespaces": "boundary",
+    "indent_guides": {
+        // Whether to show indent guides in the editor.
         "enabled": true,
-        "show_type_hints": true,
-        "show_parameter_hints": true,
-        "show_other_hints": true,
-      },
+        // The width of the indent guides in pixels, between 1 and 10.
+        "line_width": 1,
+        // The width of the active indent guide in pixels, between 1 and 10.
+        "active_line_width": 3,
+        // Determines how indent guides are colored.
+        // This setting can take the following three values:
+        ///
+        // 1. "disabled"
+        // 2. "fixed"
+        // 3. "indent_aware"
+        "coloring": "indent_aware",
+        // Determines how indent guide backgrounds are colored.
+        // This setting can take the following two values:
+        ///
+        // 1. "disabled"
+        // 2. "indent_aware"
+        "background_coloring": "disabled"
     },
-  },
+    "file_types": {
+        "Dockerfile": ["Dockerfile.*"],
+        "docker-compose": [
+            "docker-compose.yml",
+            "docker-compose.yaml",
+            "*.docker-compose.yml",
+            "*.docker-compose.yaml",
+            "compose.yml",
+            "compose.yaml"
+        ],
+        "Shell Script": [".zshrc"],
+        "JSON": [".renovaterc", "*.tfstate", "*.tfstate.backup"],
+        "Ansible": [
+            "**/ansible/.ansible.yml",
+            "**/ansible/.ansible.yaml",
+            "**/ansible/defaults/*.yml",
+            "**/ansible/defaults/*.yaml",
+            "**/ansible/meta/*.yml",
+            "**/ansible/meta/*.yaml",
+            "**/ansible/tasks/*.yml",
+            "**/ansible/tasks/*.yaml",
+            "**/ansible/handlers/*.yml",
+            "**/ansible/handlers/*.yaml",
+            "**/ansible/group_vars/*.yml",
+            "**/ansible/group_vars/*.yaml",
+            "**/ansible/playbooks/*.yaml",
+            "**/ansible/playbooks/*.yml",
+            "**/ansible/playbook*.yaml",
+            "**/ansible/playbook*.yml",
+            "**/ansible/*.yml",
+            "**/ansible/*.yaml"
+        ],
+        "Alloy": ["*.alloy"]
+    },
+    "lsp": {
+        "ansible": {
+            "settings": {
+                "ansible": {
+                    "path": "ansible"
+                },
+                "executionEnvironment": {
+                    "enabled": true
+                },
+                "python": {
+                    "interpreterPath": ".venv/bin/python3"
+                },
+                "validation": {
+                    "enabled": true,
+                    "lint": {
+                        "enabled": true,
+                        "path": "ansible-lint",
+                        "arguments": ["--fix"]
+                    }
+                }
+            }
+        },
+        "yaml-language-server": {
+            "settings": {
+                "yaml": {
+                    "schemas": {
+                        "https://raw.githubusercontent.com/ansible/ansible-lint/main/src/ansiblelint/schemas/inventory.json": [
+                            "./inventory/*.yaml",
+                            "hosts.yml"
+                        ]
+                    }
+                }
+            }
+        },
+        "clangd": {
+            "binary": {
+                "arguments": [
+                    "--background-index",
+                    "--clang-tidy",
+                    "--completion-style=detailed",
+                    "--header-insertion=never",
+                    "--log=verbose",
+                    "--query-driver=~/.platformio/packages/toolchain-xtensa*/**/bin/*gcc",
+                    "--compile-commands-dir=/home/cberg18/Documents/code/wled"
+                ]
+            },
+            "initialization_options": {
+                "compilationDatabasePath": "/home/cberg18/Documents/code/wled/compile_commands.json",
+                "fallbackFlags": ["-std=c++11"]
+            }
+        }
+    },
+    "languages": {
+        "Ansible": {
+            "semantic_tokens": "combined"
+        },
+        "YAML": {
+            "language_servers": ["yaml-language-server", "!docker-compose"]
+        },
+        "Dockerfile": {
+            "language_servers": ["dockerfile-language-server"],
+            "format_on_save": "on"
+        },
+        "Python": {
+            "language_servers": [
+                // Disable basedpyright and enable ty, and otherwise
+                // use the default configuration.
+                "ty",
+                "ruff",
+                "!basedpyright"
+            ],
+            "code_actions_on_format": {
+                "source.organizeImports.ruff": true
+            },
+            "format_on_save": "on",
+            "formatter": {
+                "language_server": {
+                    "name": "ruff"
+                }
+            },
+            "inlay_hints": {
+                "enabled": true,
+                "show_type_hints": true,
+                "show_parameter_hints": true,
+                "show_other_hints": true
+            }
+        }
+    }
 }
