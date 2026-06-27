@@ -44,12 +44,12 @@ encrypt_secrets() {
     age -r "$(cat "$KEY_PUB")" -o "$OUTPUT_FILE" "$INPUT_FILE"
 
     if [[ $? -eq 0 ]]; then
+        rm -f "$INPUT_FILE"
         echo "Success! File encrypted to: $OUTPUT_FILE"
         echo ""
         echo "To decrypt this file, use the following command:"
         echo " age -d -i $KEY_PRIV $OUTPUT_FILE > $INPUT_FILE"
         echo ""
-        echo "NOTE: Remember to secure or remove the original $INPUT_FILE if it contains sensitive data."
     else
         echo "Error: Encryption failed."
         return
