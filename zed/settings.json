@@ -7,6 +7,8 @@
 // custom settings, run the `open default settings` command
 // from the command palette or from `Zed` application menu.
 {
+  "document_symbols": "on",
+  "document_folding_ranges": "on",
   "tabs": {
     "file_icons": true,
     "git_status": true,
@@ -185,10 +187,7 @@
     "ansible": {
       "settings": {
         "ansible": {
-          "path": "ansible",
-        },
-        "executionEnvironment": {
-          "enabled": true,
+          "path": ".venv/bin/ansible",
         },
         "python": {
           "interpreterPath": ".venv/bin/python3",
@@ -197,8 +196,7 @@
           "enabled": true,
           "lint": {
             "enabled": true,
-            "path": "ansible-lint",
-            "arguments": ["--fix"],
+            "path": ".venv/bin/ansible-lint",
           },
         },
       },
