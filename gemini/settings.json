@@ -10,7 +10,7 @@
       "args": ["mcp-grafana"],
       "env": {
         "GRAFANA_URL": "https://grafana.byteshiftd.dev",
-        "GRAFANA_SERVICE_ACCOUNT_TOKEN": "glsa_9071QxAhD4lXR2V2WtsyQgdtcY5Ogu8x_06025847"
+        "GRAFANA_SERVICE_ACCOUNT_TOKEN": ""
       }
     }
   }
