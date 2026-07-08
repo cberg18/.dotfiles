@@ -48,12 +48,15 @@
   "enable_language_server": true,
   "git_panel": {
     "dock": "left",
+    "status_style": "icon",
+    "collapse_untracked_diff": true,
+    "sort_by": "path",
     "tree_view": true,
   },
   "edit_predictions": {
     "provider": "zed",
   },
-  "buffer_font_family": "MesloLGS Nerd Font Mono",
+  "buffer_font_family": "MesloLGS NF",
   "colorize_brackets": true,
   "agent": {
     "sidebar_side": "right",
@@ -121,8 +124,12 @@
   },
   "theme_overrides": {
     "Bearded Theme Monokai Black": {
-      "editor.line_number": "#6d9cbe",
-      "modified": "#feb454ff",
+      "editor.line_number": "#0088a7",
+      "editor.active_line_number": "#ff00aa",
+      "created": "#00cc74",
+      "created.border": "#00cc74",
+      "modified": "#d6ac63",
+      "modified.border": "#d6ac63",
       "element.selected": "#404040",
     },
   },
