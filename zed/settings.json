@@ -43,11 +43,11 @@
     "dark": "Bearded Icons",
   },
   "project_panel": {
-    "dock": "left",
+    "dock": "right",
   },
   "enable_language_server": true,
   "git_panel": {
-    "dock": "left",
+    "dock": "right",
     "status_style": "icon",
     "collapse_untracked_diff": true,
     "sort_by": "path",
@@ -56,9 +56,10 @@
   "edit_predictions": {
     "provider": "zed",
   },
-  "buffer_font_family": "MesloLGS NF",
+  "buffer_font_family": "MesloLGL Nerd Font Mono",
   "colorize_brackets": true,
   "agent": {
+    "flexible": false,
     "sidebar_side": "right",
     "dock": "right",
     "tool_permissions": {
@@ -237,6 +238,15 @@
         "fallbackFlags": ["-std=c++11"],
       },
     },
+    "arduino-language-server": {
+      "binary": {
+        "arguments": [
+          "-fqbn", "arduino:avr:uno",
+          "-autocreateconfig",
+          "-clangd", "/usr/bin/clangd"
+        ]
+      }
+    }
   },
   "languages": {
     "Ansible": {
