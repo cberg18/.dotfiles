@@ -188,6 +188,13 @@ plugins=(kubectl terraform ansible colorize zsh-uv-env git git-prompt python pip
 # git clone https://github.com/zsh-users/zsh-syntax-highlighting.git $ZSH_CUSTOM/plugins/zsh-syntax-highlighting
 # git clone git@github.com:scopatz/nanorc.git ~/.dotfiles/.nano/nanorc
 
+# Clean up any broken symlinks in the custom directory before sourcing
+for f in $ZSH/custom/*.zsh(N); do
+    if [[ -L "$f" && ! -e "$f" ]]; then
+        rm -f "$f"
+    fi
+done
+
 source $ZSH/oh-my-zsh.sh
 
 # User configuration
