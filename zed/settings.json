@@ -60,7 +60,6 @@
   "colorize_brackets": true,
   "agent": {
     "flexible": false,
-    "sidebar_side": "right",
     "dock": "right",
     "tool_permissions": {
       "tools": {
@@ -87,22 +86,47 @@
       "args": [],
       "projects": [
         {
-          "paths": ["/home/cberg18/Documents"],
+          "paths": [
+            "/home/cberg18/Documents"
+          ]
         },
         {
-          "paths": ["/home/cberg18/Documents/code/role-docker-tls"],
+          "paths": [
+            "/home/cberg18/Documents/code"
+          ]
         },
         {
-          "paths": ["~/Documents"],
+          "paths": [
+            "/home/cberg18/Documents/code/role-docker-tls"
+          ]
         },
         {
-          "paths": ["~/Documents/code/StockBot"],
+          "paths": [
+            "/home/cberg18/Documents/kbd"
+          ]
         },
         {
-          "paths": ["~/Documents/code/labOps"],
+          "paths": [
+            "/home/cberg18/dim_test"
+          ]
         },
-      ],
-    },
+        {
+          "paths": [
+            "~/Documents"
+          ]
+        },
+        {
+          "paths": [
+            "~/Documents/code/StockBot"
+          ]
+        },
+        {
+          "paths": [
+            "~/Documents/code/labOps"
+          ]
+        }
+      ]
+    }
   ],
   "terminal": {
     "detect_venv": {
