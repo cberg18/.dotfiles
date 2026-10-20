@@ -254,6 +254,18 @@ if ! test -L ~/.agents ; then
   ln -sv ~/.dotfiles/.agents ~/.agents
 fi
 
+# link to ghostty config
+if test -f ~/.config/ghostty/config.ghostty; then
+  echo "[] Removing existing ghostty config"
+  rm ~/.config/ghostty/config.ghostty
+fi
+
+if ! test -L ~/.config/ghostty; then
+  echo "[] linking ghostty config"
+  ln -sv ~/.dotfiles/.config/ghostty ~/.config/ghostty
+fi
+
+
 # Create symlinks for Zed configuration files
 if test -d ~/.config/zed ; then # extra test to only make link where needed
     if  ! test -L ~/.config/zed/settings.json; then
