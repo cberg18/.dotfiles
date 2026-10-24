@@ -1,0 +1,4 @@
+# Set the initial terminal window dimensions
+window-width = 70
+window-height = 85
+clipboard-trim-trailing-spaces = true
