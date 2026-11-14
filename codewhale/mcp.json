@@ -1,0 +1,55 @@
+{
+  "timeouts": {
+    "connect_timeout": 30,
+    "execute_timeout": 1800,
+    "read_timeout": 120
+  },
+  "servers": {
+    "example": {
+      "command": "node",
+      "args": [
+        "./path/to/your-mcp-server.js"
+      ],
+      "env": {},
+      "url": null,
+      "connect_timeout": null,
+      "execute_timeout": null,
+      "read_timeout": null,
+      "disabled": true,
+      "enabled": true,
+      "required": false,
+      "enabled_tools": [],
+      "disabled_tools": []
+    },
+    "pcbpa": {
+      "enabled": true,
+      "remote": false,
+      "type": "http",
+      "url": "http://127.0.0.1:8765/mcp",
+      "headers": {
+        "Authorization": "Bearer REPLACE_WITH_PCBPA_TOKEN"
+      }
+    },
+    "physcad": {
+      "enabled": true,
+      "remote": false,
+      "command": "npx",
+      "args": [
+        "-y",
+        "mcp-remote",
+        "http://127.0.0.1:47173/mcp",
+        "--allow-http"
+      ]
+    },
+    "mcp-server-grafana": {
+      "enabled": true,
+      "remote": false,
+      "command": "uvx",
+      "args": ["mcp-grafana"],
+      "env": {
+        "GRAFANA_URL": "https://grafana.byteshiftd.dev",
+        "GRAFANA_SERVICE_ACCOUNT_TOKEN": "REPLACE_WITH_GRAFANA_SERVICE_ACCOUNT_TOKEN"
+      }
+    }
+  }
+}

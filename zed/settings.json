@@ -21,14 +21,14 @@
       "args": ["mcp-grafana"],
       "env": {
         "GRAFANA_URL": "https://grafana.byteshiftd.dev",
-        "GRAFANA_SERVICE_ACCOUNT_TOKEN": "",
+        "GRAFANA_SERVICE_ACCOUNT_TOKEN": "REPLACE_WITH_GRAFANA_SERVICE_ACCOUNT_TOKEN",
       }
     },
     "pcbpa": {
       "enabled": true,
       "url": "http://127.0.0.1:8765/mcp",
       "headers": {
-        "Authorization": "Bearer "
+        "Authorization": "Bearer REPLACE_WITH_PCBPA_TOKEN"
       }
     },
     "physcad": {
@@ -40,6 +40,19 @@
         "http://127.0.0.1:47173/mcp",
         "--allow-http"
       ]
+    },
+    "portainer": {
+      "enabled": true,
+      "remote": false,
+      "command": "uvx",
+      "args": [
+        "mcp-portainer"
+      ],
+      "env": {
+        "PORTAINER_URL": "https://portainer.byteshiftd.dev",
+        "PORTAINER_API_KEY": "REPLACE_WITH_PORTAINER_API_KEY",
+        "PORTAINER_PROFILES": "BASE"
+      }
     }
   },
   "agent_servers": {
@@ -73,7 +86,7 @@
   "edit_predictions": {
     "provider": "zed",
   },
-  "buffer_font_family": "Monaspace Neon",
+  "buffer_font_family": "MesloLGL Nerd Font Mono",
   "colorize_brackets": true,
   "agent": {
     "flexible": false,

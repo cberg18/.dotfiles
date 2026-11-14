@@ -1,0 +1,305 @@
+"""Schematic builders, checked by KiCad itself (kicad-cli netlist export, ERC and re-save)."""
+import os
+
+from helpers import erc, netlist, netlist_components, resave, symbols_dir, tmpdir
+from kicad_sexpr import (Node, Schematic, SymbolLibrary, dumps, lib_pin, lib_property, lib_rectangle, lib_symbol,
+                         load, loads)
+
+
+def _libs():
+    d = symbols_dir()
+    return {n: SymbolLibrary.load(os.path.join(d, n + '.kicad_sym'), n)
+            for n in ('Device', 'power', 'Regulator_Linear')}
+
+
+def test_pin_positions_all_orientations():
+    """pin() after every rotation x mirror: a label at each computed pin point must land on that pin (netlist).
+    AMS1117-3.3 is a derived symbol (extends AMS1117-ADJ...), so this also checks flattening."""
+    libs = _libs()
+    s = Schematic.new('t')
+    s.embed_symbol('Regulator_Linear:AMS1117-3.3', libs['Regulator_Linear'])
+    i = 0
+    for ang in (0, 90, 180, 270):
+        for mir in (None, 'x', 'y'):
+            u = s.add_symbol('Regulator_Linear:AMS1117-3.3', 'U%d' % (i + 1), 'AMS1117',
+                             (25.4 + 38.1 * (i % 4), 25.4 + 38.1 * (i // 4)), ang, mir)
+            for num, pt in u.pins().items():
+                s.label('O%d_%s' % (i, num), pt)
+            i += 1
+    d = tmpdir('pins')
+    p = os.path.join(d, 't.kicad_sch')
+    s.save(p)
+    nets = netlist(p)
+    checked = 0
+    for name, pins in nets.items():
+        for rp in pins:
+            ref, pin = rp.split('.')
+            assert name.endswith('O%d_%s' % (int(ref[1:]) - 1, pin)), (name, rp)
+            checked += 1
+    assert checked == 36
+
+
+def test_wired_block_netlist_and_erc():
+    """A small wired block with power symbols, a junction, labels, a no-connect and text: ERC clean, netlist right."""
+    libs = _libs()
+    s = Schematic.new('demo', paper='A4', title='demo "block"', date='2026-10-24', rev='1')
+    for lib_id, lib in (('Device:R', libs['Device']), ('Device:C', libs['Device']), ('power:GND', libs['power']),
+                        ('power:+3V3', libs['power']), ('power:PWR_FLAG', libs['power'])):
+        s.embed_symbol(lib_id, lib)
+    r1 = s.add_symbol('Device:R', 'R1', '10k', (50.8, 50.8), footprint='Resistor_SMD:R_0402_1005Metric',
+                      fields={'LCSC': 'C25744'})
+    c1 = s.add_symbol('Device:C', 'C1', '100n', (63.5, 58.42), footprint='Capacitor_SMD:C_0402_1005Metric')
+    r1.set_field('LCSC', at=(53.34, 55.88), hide=False)           # an extra visible field
+    top, bot = r1.pin(1), r1.pin(2)
+    vcc = s.power('power:+3V3', (top[0], top[1] - 2.54))
+    s.wire(vcc.pin(1), top)
+    s.wire(bot, (bot[0], 58.42 - 3.81), (c1.pin(1)[0], 58.42 - 3.81), c1.pin(1))
+    s.junction((bot[0], 58.42 - 3.81))
+    s.wire((bot[0], 58.42 - 3.81), (bot[0], 66.04))
+    s.label('MID', (bot[0], 66.04), 270)
+    g = s.power('power:GND', (c1.pin(2)[0], c1.pin(2)[1] + 2.54))
+    s.wire(c1.pin(2), g.pin(1))
+    s.global_label('MID_OUT', (76.2, 58.42 - 3.81), 0, 'output')
+    s.wire((c1.pin(1)[0], 58.42 - 3.81), (76.2, 58.42 - 3.81))
+    flags = [s.add_symbol('power:PWR_FLAG', '#FLG0%d' % k, 'PWR_FLAG', (30.48 + 10.16 * k, 30.48), in_bom=False,
+                          on_board=False) for k in (1, 2)]
+    s.wire(flags[0].pin(1), (flags[0].pin(1)[0], 35.56))
+    s.power('power:+3V3', (flags[0].pin(1)[0], 35.56), angle=180)
+    s.wire(flags[1].pin(1), (flags[1].pin(1)[0], 35.56))
+    s.power('power:GND', (flags[1].pin(1)[0], 35.56))
+    s.text('multi-line note:\n"quoted" \\ back-slash', (30.48, 80.0))
+    d = tmpdir('block')
+    p = os.path.join(d, 'demo.kicad_sch')
+    s.save(p)
+    # the only ERC finding is the deliberate one: local label MID and global label MID_OUT name the same net
+    assert erc(p) == {'multiple_net_names': 1}, erc(p)
+    nets = {k: sorted(v) for k, v in netlist(p).items()}
+    assert sorted(nets['+3V3']) == ['R1.1']
+    assert sorted(nets['GND']) == ['C1.2']
+    mid = [v for k, v in nets.items() if 'C1.1' in v]
+    assert mid == [['C1.1', 'R1.2']], nets
+    comps = netlist_components(p)
+    assert comps['R1']['LCSC'] == 'C25744' and comps['R1']['_footprint'] == 'Resistor_SMD:R_0402_1005Metric'
+    # KiCad re-saves it without dropping anything, and the text survives with its quote, backslash and newline
+    t = resave(p)
+    texts = [n for n in loads(t).nodes('text')]
+    assert texts and texts[0][1] == 'multi-line note:\n"quoted" \\ back-slash'
+    assert len(loads(t).nodes('symbol')) == len(s.tree.nodes('symbol'))
+
+
+def test_hierarchical_sheet():
+    """Root sheet with a sheet block + sheet pin, sub-sheet with a hierarchical label: the net joins across."""
+    libs = _libs()
+    d = tmpdir('hier')
+    root = Schematic.new('hier')
+    sub_path = os.path.join(d, 'sub.kicad_sch')
+    blk = root.sheet('Sub', 'sub.kicad_sch', (101.6, 50.8), (25.4, 12.7), pins=[('SIG', 'input', (101.6, 55.88), 180)])
+    root.embed_symbol('Device:R', libs['Device'])
+    r1 = root.add_symbol('Device:R', 'R1', '1k', (76.2, 55.88), 90, footprint='Resistor_SMD:R_0402_1005Metric')
+    root.wire(r1.pin(1), (101.6, 55.88))
+    root.no_connect(r1.pin(2))
+    sub = Schematic.new('hier', root=False, instance_path='/%s/%s' % (root.uuid, blk.get('uuid')))
+    sub.embed_symbol('Device:R', libs['Device'])
+    r2 = sub.add_symbol('Device:R', 'R2', '2k', (76.2, 55.88), 90, footprint='Resistor_SMD:R_0402_1005Metric')
+    sub.wire(r2.pin(2), (88.9, 55.88))
+    sub.hierarchical_label('SIG', (88.9, 55.88), 0, 'input')
+    sub.no_connect(r2.pin(1))
+    root.save(os.path.join(d, 'hier.kicad_sch'))
+    sub.save(sub_path)
+    nets = netlist(os.path.join(d, 'hier.kicad_sch'))
+    joined = [sorted(v) for v in nets.values() if 'R1.1' in v]
+    assert joined == [['R1.1', 'R2.2']], nets
+    comps = netlist_components(os.path.join(d, 'hier.kicad_sch'))
+    assert set(comps) == {'R1', 'R2'}
+
+
+def test_library_symbol_builder_and_load_modify_save():
+    """Build a library symbol, place it, then re-load the sheet and modify it (read-modify-write)."""
+    sym = lib_symbol('TEST', [lib_property('Reference', 'U', 0, 6.35), lib_property('Value', 'TEST', 0, -6.35),
+                              lib_property('Footprint', '', hide=True), lib_property('Datasheet', '', hide=True),
+                              lib_property('Description', 'test part', hide=True)],
+                     {(0, 1): [lib_rectangle(-5.08, 5.08, 5.08, -5.08)],
+                      (1, 1): [lib_pin('input', -7.62, 2.54, 0, 'IN', '1'),
+                               lib_pin('output', 7.62, 2.54, 180, 'OUT', '2'),
+                               lib_pin('passive', 0, -7.62, 90, 'COM', '3'),
+                               lib_pin('passive', 0, -7.62, 90, 'COM', '4', hide=True)]})
+    lib = SymbolLibrary.new('t')
+    lib.add(sym)
+    d = tmpdir('libsym')
+    lp = os.path.join(d, 't.kicad_sym')
+    lib.save(lp)
+    assert resave(lp)                                            # KiCad accepts the library
+    s = Schematic.new('m')
+    u = s.add_symbol('t:TEST', 'U1', 'TEST', (50.8, 50.8), lib=SymbolLibrary.load(lp, 't'))
+    for k in ('1', '2', '3'):
+        s.label('N' + k, u.pin(k))
+    p = os.path.join(d, 'm.kicad_sch')
+    s.save(p)
+    s2 = Schematic.load(p)
+    u2 = s2.symbol('U1')
+    u2.set_field('Value', 'TEST2')
+    u2.set_field('Reference', 'U7')
+    assert u2.pin('OUT') == u.pin('2')
+    s2.save()
+    comps = netlist_components(p)
+    assert set(comps) == {'U7'} and comps['U7']['_value'] == 'TEST2' and comps['U7']['Description'] == 'test part'
+    nets = netlist(p)
+    assert sorted(v for k, v in nets.items() if k.endswith('N3'))[0] == ['U7.3', 'U7.4']
+
+
+def test_validate_rejects_duplicates():
+    libs = _libs()
+    s = Schematic.new('v')
+    s.embed_symbol('Device:R', libs['Device'])
+    s.add_symbol('Device:R', 'R1', '1k', (25.4, 25.4))
+    s.add_symbol('Device:R', 'R1', '1k', (50.8, 25.4))
+    assert any('duplicate references' in p for p in s.validate())
+    s2 = Schematic.new('v')
+    s2.add(Node('junction', Node('at', 1, 1), Node('uuid', 'a')))
+    s2.add(Node('junction', Node('at', 2, 2), Node('uuid', 'a')))
+    assert any('duplicated uuids' in p for p in s2.validate())
+
+
+def test_lib_name_instance_resolves_to_its_own_embedded_symbol():
+    """KiCad embeds a placed symbol that differs from its library copy under a new name and points the instance at
+    it with (lib_name "R_1"); lib_id stays "Device:R". validate(), save() and pins() must use that copy - KiCad's
+    netlist confirms the pins are where pins() says (the variant's pins are moved, so lib_id's would miss)."""
+    libs = _libs()
+    s = Schematic.new('ln')
+    s.embed_symbol('Device:R', libs['Device'])
+    var = s.lib_symbol('Device:R').deepcopy()
+    var[1] = 'R_1'
+    for sub in var.nodes('symbol'):
+        sub[1] = 'R_1' + str(sub[1])[len('R'):]
+        for pin in sub.nodes('pin'):
+            a = pin.need('at')
+            a[1] = a.number(1) + 2.54                    # every pin one grid step right of the library's
+    ls = s.tree.need('lib_symbols')
+    ls.append(var)
+    u = s.add_symbol('Device:R', 'R1', '1k', (50.8, 50.8))
+    u.node.insert(1, Node('lib_name', 'R_1'))
+    assert u.lib_key == 'R_1' and u.lib is var
+    assert s.validate() == []
+    pins = u.pins()
+    assert abs(pins['1'][0] - (50.8 + 2.54)) < 1e-6
+    for num, pt in pins.items():
+        s.label('P' + num, pt)
+    d = tmpdir('libname')
+    p = os.path.join(d, 'ln.kicad_sch')
+    s.save(p)
+    s2 = Schematic.load(p)
+    assert s2.validate() == [] and s2.symbol('R1').pins() == pins
+    nets = netlist(p)
+    assert sorted(v for k, v in nets.items() if k.endswith('P1'))[0] == ['R1.1']
+    assert sorted(v for k, v in nets.items() if k.endswith('P2'))[0] == ['R1.2']
+    ls.remove(var)                                       # the variant missing: named in the message, not lib_id alone
+    assert any('R1 uses Device:R (lib_name R_1)' in m for m in s.validate())
+
+
+def test_loaded_real_schematic_round_trips_through_api():
+    """Load -> touch nothing -> save is byte-identical for a sheet KiCad saved (here: re-saved by kicad-cli)."""
+    libs = _libs()
+    s = Schematic.new('rt')
+    s.embed_symbol('Device:R', libs['Device'])
+    s.add_symbol('Device:R', 'R1', '1k', (25.4, 25.4))
+    d = tmpdir('rt')
+    p = os.path.join(d, 'rt.kicad_sch')
+    s.save(p)
+    t = resave(p)
+    s2 = Schematic.load(p)
+    s2.save()
+    assert open(p).read() == t
+    assert dumps(load(p)) == t
+
+
+def test_bus_and_polyline_survive_kicad_resave():
+    s = Schematic.new('m')
+    s.bus((25.4, 25.4), (50.8, 25.4))
+    s.polyline([(25.4, 30.48), (50.8, 30.48), (50.8, 40.64)], width=0.2, type_='dash')
+    d = tmpdir('bus')
+    p = os.path.join(d, 'm.kicad_sch')
+    s.save(p)
+    t = loads(resave(p))
+    assert len(t.nodes('bus')) == 1 and len(t.nodes('polyline')) == 1
+    assert str(t.find('polyline').need('stroke').get('type')) == 'dash'
+
+
+def test_add_symbol_lib_fields_limits_the_copied_properties():
+    """lib_fields: a generator that decides the field set itself gets exactly those properties on the instance;
+    the default copies every library property, as KiCad does (kicad-cli's netlist lists Description empty for an
+    instance without one)."""
+    libs = _libs()
+    s = Schematic.new('lf')
+    s.embed_symbol('Device:R', libs['Device'])
+    s.add_symbol('Device:R', 'R1', '1k', (50.8, 50.8), footprint='Resistor_SMD:R_0402_1005Metric')
+    s.add_symbol('Device:R', 'R2', '1k', (63.5, 50.8), footprint='Resistor_SMD:R_0402_1005Metric', datasheet='',
+                 lib_fields=('Reference', 'Value', 'Footprint', 'Datasheet'), fields={'LCSC': 'C11702'})
+    d = tmpdir('libfields')
+    p = os.path.join(d, 'lf.kicad_sch')
+    s.save(p)
+    assert [str(f[1]) for f in s.symbol('R2').node.nodes('property')] == ['Reference', 'Value', 'Footprint',
+                                                                            'Datasheet', 'LCSC']
+    comps = netlist_components(p)
+    assert comps['R1'].get('Description') == 'Resistor'
+    assert comps['R2']['LCSC'] == 'C11702' and comps['R2'].get('Description', '') == ''
+    assert erc(p).get('lib_symbol_mismatch', 0) == 0
+    assert comps['R2']['_footprint'] == 'Resistor_SMD:R_0402_1005Metric'
+
+
+def test_multi_instance_sheet():
+    """One sub-sheet file placed by two sheet blocks: each symbol lists both instances with its own reference (what
+    KiCad 10 writes), the netlist has both parts on their own sheet paths, ERC is clean, KiCad re-saves the instances
+    unchanged, and a regeneration finds a symbol's id by any (instance path, reference) it had."""
+    libs = _libs()
+    d = tmpdir('multi')
+    open(os.path.join(d, 'm.kicad_pro'), 'w').write('{}')
+
+    def build(previous=None):
+        root = Schematic.new('m', previous=os.path.join(d, 'm.kicad_sch') if previous else None)
+        root.embed_symbol('Device:R', libs['Device'])
+        blocks = []
+        for k in (1, 2):
+            y = 50.8 + 25.4 * (k - 1)
+            blk = root.sheet('ch%d' % k, 'ch.kicad_sch', (101.6, y), (25.4, 7.62), instances=[],
+                             pins=[('SIG', 'input', (101.6, y + 2.54), 180)])
+            root.sheet_instance(blk, root.instance_path, str(k + 1))
+            r = root.add_symbol('Device:R', 'R%d' % k, '1k', (76.2, y + 2.54), 90,
+                                footprint='Resistor_SMD:R_0402_1005Metric')
+            root.wire(r.pin(1), (101.6, y + 2.54))
+            root.no_connect(r.pin(2))
+            blocks.append(blk)
+        paths = ['%s/%s' % (root.instance_path, b.get('uuid')) for b in blocks]
+        sub = Schematic.new('m', root=False, file='ch.kicad_sch',
+                            previous=os.path.join(d, 'ch.kicad_sch') if previous else None)
+        sub.embed_symbol('Device:R', libs['Device'])
+        r = sub.add_symbol('Device:R', 'R101', '2k', (76.2, 55.88), 90, footprint='Resistor_SMD:R_0402_1005Metric',
+                           key='symbol/R1/1', instances=[(paths[0], 'R101'), (paths[1], 'R201')])
+        sub.wire(r.pin(2), (88.9, 55.88))
+        sub.hierarchical_label('SIG', (88.9, 55.88), 0, 'input')
+        sub.no_connect(r.pin(1))
+        return root, sub, r, paths
+    root, sub, r, paths = build()
+    assert r.instances() == [(paths[0], 'R101', 1), (paths[1], 'R201', 1)] and r.ref == 'R101'
+    assert r.reference(paths[1]) == 'R201'
+    assert sub.tree.find('embedded_fonts') is None and sub.tree.find('sheet_instances') is None
+    root.save(os.path.join(d, 'm.kicad_sch'))
+    sub.save(os.path.join(d, 'ch.kicad_sch'))
+    p = os.path.join(d, 'm.kicad_sch')
+    assert erc(p) == {}, erc(p)
+    nets = {k: sorted(v) for k, v in netlist(p).items()}
+    assert sorted(v for v in nets.values() if len(v) > 1) == [['R1.1', 'R101.2'], ['R2.1', 'R201.2']], nets
+    assert '/ch1/SIG' in nets and '/ch2/SIG' in nets, nets
+    # KiCad keeps both instances when it re-saves the sub-sheet
+    before = sorted(dumps(n) for n in load(os.path.join(d, 'ch.kicad_sch')).nodes())
+    after = sorted(dumps(n) for n in loads(resave(os.path.join(d, 'ch.kicad_sch'))).nodes())
+    assert before == after
+    # a duplicate reference within one instance is refused; the same reference in two instances is not
+    r.set_reference('R101', paths[1])
+    assert not any('duplicate references' in m for m in sub.validate())
+    sub.add_symbol('Device:R', 'R101', '1k', (50.8, 76.2), instances=[(paths[0], 'R101'), (paths[1], 'R202')])
+    assert any('R101 unit 1 in %s' % paths[0] in m for m in sub.validate()), sub.validate()
+    # a symbol whose id was changed (as a GUI edit or another tool might) keeps it, found by its instances
+    t = open(os.path.join(d, 'ch.kicad_sch')).read().replace(r.uuid, '12345678-1234-4234-8234-123456789abc')
+    open(os.path.join(d, 'ch.kicad_sch'), 'w').write(t)
+    _, sub2, r2, _ = build(previous=True)
+    assert r2.uuid == '12345678-1234-4234-8234-123456789abc', r2.uuid

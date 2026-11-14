@@ -42,6 +42,64 @@ else
     echo "[✖] somethings weird"
 fi
 
+# Ensure .dotfiles skills symlinks are in place
+_dotfiles_link_dir() {
+    local src="$1" dst="$2"
+    if [[ -L "$dst" ]]; then
+        [[ "$(readlink "$dst")" == "$src" ]] || ln -sfn "$src" "$dst"
+    elif [[ ! -e "$dst" ]]; then
+        mkdir -p "${dst:h}"
+        ln -s "$src" "$dst"
+    fi
+}
+if [[ -d "$HOME/.dotfiles/skills" ]]; then
+    _dotfiles_link_dir "$HOME/.dotfiles/.agents" "$HOME/.agents"
+    _dotfiles_link_dir "$HOME/.dotfiles/skills" "$HOME/.codewhale/skills"
+    _dotfiles_link_dir "$HOME/.dotfiles/skills" "$HOME/.gemini/skills"
+fi
+unfunction _dotfiles_link_dir 2>/dev/null
+
+# Link application settings
+_dotfiles_link_config() {
+    local src="$1" dst="$2" backup index=0
+    [[ -f "$src" ]] || return
+    mkdir -p "${dst:h}" || return
+
+    if [[ -L "$dst" ]]; then
+        if [[ ! "$dst" -ef "$src" ]]; then
+            echo "[] Keeping existing settings link: $dst"
+        fi
+        return
+    elif [[ -e "$dst" ]]; then
+        if [[ ! -f "$dst" ]] || ! cmp -s "$src" "$dst"; then
+            echo "[] Keeping existing settings: $dst"
+            return
+        fi
+        backup="$dst.dotfiles-backup"
+        while [[ -e "$backup" || -L "$backup" ]]; do
+            (( index++ ))
+            backup="$dst.dotfiles-backup.$index"
+        done
+        mv "$dst" "$backup" || return
+        if ! cmp -s "$src" "$backup"; then
+            mv "$backup" "$dst"
+            echo "[] Keeping changed settings: $dst"
+            return
+        fi
+    fi
+
+    if ! ln -s "$src" "$dst"; then
+        if [[ -n "$backup" && ! -e "$dst" && ! -L "$dst" ]]; then
+            mv "$backup" "$dst"
+        fi
+        echo "[] Could not link settings: $dst"
+    fi
+}
+_dotfiles_link_config "$HOME/.dotfiles/.hermes/config.yaml" "$HOME/.hermes/config.yaml"
+_dotfiles_link_config "$HOME/.dotfiles/codewhale/settings.toml" "$HOME/.codewhale/settings.toml"
+# Codewhale rejects config.toml symlinks. fill_mcp_secrets sets its MCP path after filling.
+unfunction _dotfiles_link_config 2>/dev/null
+
 export PATH="$HOME/.local/bin:$PATH"
 export ZSH="$HOME/.oh-my-zsh"
 export RPS1C=034
@@ -255,15 +313,27 @@ if ! test -L ~/.agents ; then
 fi
 
 # link to ghostty config
-if test -f ~/.config/ghostty/config.ghostty; then
-  echo "[] Removing existing ghostty config"
-  rm ~/.config/ghostty/config.ghostty
+_ghostty_config_dir="${XDG_CONFIG_HOME:-$HOME/.config}/ghostty"
+_ghostty_config_src="$HOME/.dotfiles/ghostty/config.ghostty"
+if [[ -f "$_ghostty_config_src" ]]; then
+    # Replace the old directory link so the config link stays outside the repo.
+    if [[ -L "$_ghostty_config_dir" && "$_ghostty_config_dir" -ef "$HOME/.dotfiles/ghostty" ]]; then
+        rm "$_ghostty_config_dir"
+    fi
+    if mkdir -p "$_ghostty_config_dir"; then
+        _ghostty_config_target="$_ghostty_config_dir/config.ghostty"
+        # An empty existing config can coexist with Ghostty's older config path.
+        if [[ -f "$_ghostty_config_target" && ! -L "$_ghostty_config_target" && ! -s "$_ghostty_config_target" ]]; then
+            _ghostty_config_target="$_ghostty_config_dir/config"
+        fi
+        if [[ ! -e "$_ghostty_config_target" && ! -L "$_ghostty_config_target" ]]; then
+            ln -s "$_ghostty_config_src" "$_ghostty_config_target"
+        elif [[ ! "$_ghostty_config_target" -ef "$_ghostty_config_src" ]]; then
+            echo "[] Keeping existing Ghostty config: $_ghostty_config_target"
+        fi
+    fi
 fi
-
-if ! test -L ~/.config/ghostty; then
-  echo "[] linking ghostty config"
-  ln -sv ~/.dotfiles/.config/ghostty ~/.config/ghostty
-fi
+unset _ghostty_config_dir _ghostty_config_src _ghostty_config_target
 
 # Create symlinks for Zed configuration files
 if test -d ~/.config/zed ; then # extra test to only make link where needed

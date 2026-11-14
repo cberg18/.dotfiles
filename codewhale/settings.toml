@@ -1,0 +1,54 @@
+calm_mode = true
+pet_mode = false
+tool_collapse_mode = "calm"
+low_motion = false
+fancy_animations = true
+focus_texture = "off"
+work_surface_placement = "bottom"
+work_surface_top_height = 8
+work_surface_side_width = 30
+rail_panel = "tasks"
+bracketed_paste = true
+paste_burst_detection = true
+mention_menu_limit = 128
+mention_walk_depth = 10
+mention_menu_behavior = "fuzzy"
+show_thinking = false
+thinking_default_expanded = false
+thinking_preview_lines = 2
+thinking_highlight = true
+help_expand_groups = false
+contextual_tips = true
+pin_last_prompt = true
+show_tool_details = true
+inline_diffs = "full"
+locale = "auto"
+theme = "claude"
+composer_density = "comfortable"
+composer_border = true
+composer_multiline_mode = false
+composer_vim_mode = "normal"
+transcript_spacing = "spacious"
+default_mode = "operate"
+context_panel = false
+cost_currency = "usd"
+max_input_history = 100
+reasoning_effort = "low"
+permission_posture = "full-access"
+status_indicator = "cw"
+synchronized_output = "auto"
+workspace_follow_symlinks = false
+feature_intro_shown = false
+yolo_deprecation_shown = false
+work_surface_bottom_migrated = true
+
+[behavioral_tip_impressions]
+background_job_receipt = 2
+cleared_input_restore = 2
+mcp_validation = 2
+repeated_command_hotbar = 2
+
+[footer_hint_uses]
+esc_interrupt = 2
+mode_cycle = 2
+permission_cycle = 2

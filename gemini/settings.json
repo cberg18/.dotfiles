@@ -10,7 +10,7 @@
       "args": ["mcp-grafana"],
       "env": {
         "GRAFANA_URL": "https://grafana.byteshiftd.dev",
-        "GRAFANA_SERVICE_ACCOUNT_TOKEN": ""
+        "GRAFANA_SERVICE_ACCOUNT_TOKEN": "REPLACE_WITH_GRAFANA_SERVICE_ACCOUNT_TOKEN"
       }
     },
     "portainer": {
@@ -22,7 +22,7 @@
       ],
       "env": {
         "PORTAINER_URL": "https://portainer.byteshiftd.dev",
-        "PORTAINER_API_KEY": "",
+        "PORTAINER_API_KEY": "REPLACE_WITH_PORTAINER_API_KEY",
         "PORTAINER_PROFILES": "BASE"
       }
     }
