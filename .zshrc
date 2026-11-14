@@ -265,7 +265,6 @@ if ! test -L ~/.config/ghostty; then
   ln -sv ~/.dotfiles/.config/ghostty ~/.config/ghostty
 fi
 
-
 # Create symlinks for Zed configuration files
 if test -d ~/.config/zed ; then # extra test to only make link where needed
     if  ! test -L ~/.config/zed/settings.json; then
@@ -396,3 +395,5 @@ fi
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+. "$HOME/.local/bin/env"

@@ -12,6 +12,19 @@
         "GRAFANA_URL": "https://grafana.byteshiftd.dev",
         "GRAFANA_SERVICE_ACCOUNT_TOKEN": ""
       }
+    },
+    "portainer": {
+      "enabled": true,
+      "remote": false,
+      "command": "uvx",
+      "args": [
+        "mcp-portainer"
+      ],
+      "env": {
+        "PORTAINER_URL": "https://portainer.byteshiftd.dev",
+        "PORTAINER_API_KEY": "",
+        "PORTAINER_PROFILES": "BASE"
+      }
     }
   }
 }

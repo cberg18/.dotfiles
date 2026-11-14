@@ -22,8 +22,25 @@
       "env": {
         "GRAFANA_URL": "https://grafana.byteshiftd.dev",
         "GRAFANA_SERVICE_ACCOUNT_TOKEN": "",
-      },
+      }
     },
+    "pcbpa": {
+      "enabled": true,
+      "url": "http://127.0.0.1:8765/mcp",
+      "headers": {
+        "Authorization": "Bearer "
+      }
+    },
+    "physcad": {
+      "enabled": true,
+      "command": "npx",
+      "args": [
+        "-y",
+        "mcp-remote",
+        "http://127.0.0.1:47173/mcp",
+        "--allow-http"
+      ]
+    }
   },
   "agent_servers": {
     "gemini": {
@@ -56,7 +73,7 @@
   "edit_predictions": {
     "provider": "zed",
   },
-  "buffer_font_family": "MesloLGL Nerd Font Mono",
+  "buffer_font_family": "Monaspace Neon",
   "colorize_brackets": true,
   "agent": {
     "flexible": false,
@@ -75,9 +92,10 @@
     },
     "model_parameters": [],
     "default_model": {
+      "effort": "medium",
       "enable_thinking": true,
       "provider": "google",
-      "model": "gemini-4-argon",
+      "model": "gemini-4-hydrogen",
     },
   },
   "ssh_connections": [
